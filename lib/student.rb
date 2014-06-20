@@ -1,5 +1,5 @@
 class Student
-  attr_reader :name, :gender, :year, :birth_date, :admission_date, :alumni_status, :house
+  attr_reader :name, :gender, :year, :birth_date, :admission_date, :alumni_status, :house, :known_spells
 
   def initialize(
     name,
@@ -17,7 +17,7 @@ class Student
   end
 
   def add_spell(spell, proficiency)
-    @known_spells[spell.name.to_sym] = proficiency
+    @known_spells[spell] = proficiency
   end
 
 end

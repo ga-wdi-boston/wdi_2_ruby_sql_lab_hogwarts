@@ -58,14 +58,24 @@ slytherin.add_student(tom)
 
 
 hogwarts = School.new(houses:[gryffindor, ravenclaw, hufflepuff, slytherin], spells: spells)
+# I commented out the queries so they wouldn't be annoying
 
-arr = []
-hogwarts.houses.each do |house|
-  house.students.each do |student|
-    arr << student.name unless student.alumni_status
-  end
-end
+# Query 1
+# arr = []
+# hogwarts.houses.each do |house|
+#   house.students.each do |student|
+#     arr << student.name unless student.alumni_status
+#   end
+# end
 
-puts arr.sort
+# puts arr.sort
+
+#Query 2
+# arr = []
+# dumbledore.known_spells.each_key do |spell|
+#   arr << spell.category
+# end
+# puts arr.uniq
+
 
 
