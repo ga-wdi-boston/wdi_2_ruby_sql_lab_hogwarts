@@ -4,5 +4,7 @@ class Spell
 
   def initialize(name:, incantation:, category:, level: 1)
     @name, @incantation, @category, @level = name, incantation, category, level
+
+    @students = []
   end
 end
