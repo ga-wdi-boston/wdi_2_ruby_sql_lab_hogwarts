@@ -1,10 +1,10 @@
 \c hogwarts
 
 INSERT INTO houses (name, animal, points) VALUES
-  ('Gryffindor', 'Lion', 1000),
-  ('Hufflepuff', 'Badger', 1000),
-  ('Ravenclaw', 'Eagle', 1000),
-  ('Slytherin', 'Snake', 1000);
+  ('Gryffindor', 'Lion', 3000),
+  ('Hufflepuff', 'Badger', 2000),
+  ('Ravenclaw', 'Eagle', 1200),
+  ('Slytherin', 'Snake', 600);
 
 WITH ins (name, gender, year, birth_date, admission_date, alumni_status, house) AS
 (VALUES
@@ -16,7 +16,7 @@ WITH ins (name, gender, year, birth_date, admission_date, alumni_status, house) 
   ('Cho Chang', 'Female', 8, '1979-01-21', '1990-09-01', 1, 'Ravenclaw'),
   ('Padma Patil', 'Female', 7, '1980-01-01', '1991-09-01', 0, 'Ravenclaw'),
   ('Draco Malfoy', 'Male', 7, '1980-01-22', '1991-09-01', 0, 'Slytherin'),
-  ('Bellatrix Lestrange', 'Female', 27, '1960-01-22', '1991-09-01', 1, 'Slytherin')
+  ('Bellatrix Lestrange', 'Female', 27, '1960-01-22', '1971-09-01', 1, 'Slytherin')
 )
 INSERT INTO students
   (name, gender, year, birth_date, admission_date, alumni_status, house_id)
@@ -48,7 +48,7 @@ WITH tmp (student_name, spells_name, proficiency) AS
   ('Hannah Abbott', 'Summoning Charm', 0.9),
   ('Hannah Abbott', 'Light Charm', 0.7),
   ('Cho Chang', 'Summoning Charm', 0.9),
-  ('Cho Chang', 'Summoning Charm', 0.9),
+  ('Cho Chang', 'Light Charm', 0.9),
   ('Padma Patil', 'Summoning Charm', 0.8),
   ('Draco Malfoy', 'Summoning Charm', 0.7),
   ('Draco Malfoy', 'Imperius Curse', 0.8),
