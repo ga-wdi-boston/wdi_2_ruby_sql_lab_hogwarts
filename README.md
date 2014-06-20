@@ -34,13 +34,15 @@ Create a database and tables to store these objects, with appropriate columns an
 
 ## Step 2: Classes
 
-Create Ruby classes for the three main concepts listed in Step 1, and allow them to be initialized with the listed attributes. Additionally, create a "container" class called School to hold a list of houses and a list of spells.
+Create Ruby classes for the three main concepts listed in Step 1, and allow them to be initialized with the listed attributes. Additionally, create a "container" class called School.
 
-Add the following CRUD behaviors to your classes:
+* The school has a list of houses and a list of spells.
+* Houses have a list of their students, and students hold a reference to the house they belong to.
+* Students have a list of their "known spells", and spells have a list of students who know them.
 
-* Houses maintain a list of their students, and students hold a reference to the house they belong to.
+There does not (yet) need to be a way to manipulate these lists of objects, other than using the built-in Ruby methods to alter them directly.
+
+## Step 3: Data
+
 * Students can only be added to a house through a method that checks whether they are at least 10 years old, and throws an error otherwise. If the student is added, they have their year set to 1 and their admission date set to the current date.
-* Students maintain a list of their "known spells", and spells maintain a list of students who know them.
 * Students have a method that allows them to practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%.
-
-Aside from the student-adding and spell-practicing methods above, there does not (yet) need to be any other way to manipulate the various lists of objects. Houses and spells can be added to the School by simply shoveling them in. Use `.dup` to prevent the other lists from being altered directly.
