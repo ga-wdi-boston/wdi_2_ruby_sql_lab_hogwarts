@@ -44,5 +44,11 @@ There does not (yet) need to be a way to manipulate these lists of objects, othe
 
 ## Step 3: Data
 
+In a `.sql` file, write commands that will insert a variety of data into the database you created in Step 1. Make sure you have several houses and several spells in various categories, with each house having several students and each student knowing several spells (appropriate to their year level) with varying degrees of proficiency.
+
+Then, in a `.rb` file, require the classes you created in Step 2 and write code that will create a mirror of your SQL data as Ruby objects. Of course, unlike your SQL data this will not be saved anywhere, but run your file with a `binding.pry` at the end to make sure it works.
+
+## Step 4: Behavior
+
 * Students can only be added to a house through a method that checks whether they are at least 10 years old, and throws an error otherwise. If the student is added, they have their year set to 1 and their admission date set to the current date.
 * Students have a method that allows them to practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%.
