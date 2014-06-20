@@ -43,4 +43,4 @@ Add the following CRUD behaviors to your classes:
 * Students maintain a list of their "known spells", and spells maintain a list of students who know them.
 * Students have a method that allows them to practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%.
 
-Aside from the student-adding and spell-practicing methods above, there does not (yet) need to be any other way to manipulate the various lists of objects.
+Aside from the student-adding and spell-practicing methods above, there does not (yet) need to be any other way to manipulate the various lists of objects. Houses and spells can be added to the School by simply shoveling them in. Use `.dup` to prevent the other lists from being altered directly.
