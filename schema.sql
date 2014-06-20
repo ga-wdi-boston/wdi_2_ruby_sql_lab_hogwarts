@@ -25,7 +25,7 @@ CREATE TABLE spells (
   name TEXT UNIQUE NOT NULL,
   incantation TEXT,
   category TEXT,
-  level INTEGER
+  level TEXT
 );
 
 CREATE TABLE known_spells (
