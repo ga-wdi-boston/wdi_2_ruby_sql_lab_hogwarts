@@ -8,3 +8,8 @@ SELECT DISTINCT spells.category FROM spells
   INNER JOIN students
   ON known_spells.student_id = students.id
   WHERE students.name = 'Dumbledore';
+
+SELECT AVG(proficiency) FROM known_spells
+  INNER JOIN students
+  ON known_spells.student_id = students.id
+  WHERE students.name = 'Harry';

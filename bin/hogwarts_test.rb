@@ -70,12 +70,15 @@ hogwarts = School.new(houses:[gryffindor, ravenclaw, hufflepuff, slytherin], spe
 
 # puts arr.sort
 
-#Query 2
+# Query 2
 # arr = []
 # dumbledore.known_spells.each_key do |spell|
 #   arr << spell.category
 # end
 # puts arr.uniq
+
+#Query 3
+puts (harry.known_spells.values.reduce(0,&:+).to_f / harry.known_spells.count)
 
 
 
