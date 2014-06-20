@@ -93,3 +93,7 @@ Implement each of the following behaviors as specified. Add the SQL queries to a
   1. All students' years are increased by 1. The exception is students who are at year 7, who instead graduate from the school. Their alumni status should be updated accordingly.
   2. All students lose 10% proficiency in all of their spells. If this would take their proficiency below 0%, they will forget the spell entirely &ndash; it is removed from their "known spells".
 * **SQL:** Write a set of SQL statements that will perform the behaviors described above (wrapped in a transaction as before).
+
+## Super Bonus Challenge EX Ultra Edition
+
+Remember how we said the two halves of this lab would be completely disconnected? If you're feeling especially adventurous, and all of the above tasks weren't enough for you, how's this for a challenge: Connect them! Use the [`pg` gem](http://deveiate.org/code/pg/), already installed on your system, to execute SQL statements from your Ruby code. For instance, asking the School for its houses should retrieve all the house records from the database, instantiate House objects for each of them, and return those from the method. We would never need to write code like this in real life since there is a part of Rails called ActiveRecord that does all the work for us... but this will certainly give you an appreciation for how much work that is!
