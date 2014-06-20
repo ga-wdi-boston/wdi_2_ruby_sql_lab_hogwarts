@@ -48,9 +48,23 @@ In a `.sql` file, write commands that will insert a variety of data into the dat
 
 Then, in a `.rb` file, require the classes you created in Step 2 and write code that will create a mirror of your SQL data as Ruby objects. Of course, unlike your SQL data this will not be saved anywhere, but run your file with a `binding.pry` at the end to make sure it works.
 
+## Step 4: Queries
+
+Implement each of the following queries as SQL statements *and* Ruby methods on the appropriate classes. Add the SQL queries to a separate `.sql` file, and add example uses of your Ruby methods to the `.rb` file you created in Step 3.
+
+* Get all current students (i.e. not alumni) sorted alphabetically.
+* For a given student, find all spell categories they know spells in.
+* For a given student, get their average proficiency level across all spells they know.
+* For a given student, find all spells at their level or lower that they *don't* know.
+* For a given spell, find all students who are at the spell's level or higher, but don't know it.
+* Get a roster of all current students:
+  * **SQL:** Sort the students by house, by year within houses, and alphabetically within years. The name of the house should be included in the results.
+  * **Ruby:** Return a hash where the keys are house names and the values are hashes. Within these hashes, the keys are year numbers and the values are arrays of students, sorted alphabetically.
+* For a given spell category, houses have a "total proficiency", which is the sum of the proficiency scores of all students in the house for all spells in that category. Find out which spell category each house is most proficient in, using this metric.
+
 ## Step 5: Behavior
 
-Implement each of the following behaviors as a SQL query and/or a Ruby method as specified. Add the SQL queries to a separate `.sql` file, and add example uses of your Ruby methods to the `.rb` file you created in Step 3.
+Implement each of the following behaviors as specified. Add the SQL queries to a separate `.sql` file, and add example uses of your Ruby methods to the `.rb` file you created in Step 3.
 
 ### Admitting Students
 
@@ -64,8 +78,8 @@ Implement each of the following behaviors as a SQL query and/or a Ruby method as
 
 ### Practicing Spells
 
-* **Ruby:** Students can practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%, unless it is already at 100%.
-* **Ruby:** The school can hold a "workshop" for a specific category of spell. This will allow all students to practice all spells in that category *which are at their level or lower* 10 times.
+* **Ruby:** Students can practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%, unless it is already at 100%. If the spell is higher than the student's current level, an error should be thrown.
+* **Ruby:** The school can hold a "workshop" for a specific category of spell. This will allow all students to practice all spells in that category 10 times. If a spell is higher than a student's current level, no error should be thrown; the spell just isn't practiced.
 * **SQL:** Write a set of SQL statements that will perform the "workshop" behavior described above for some arbitrary category. Make sure spells are added to a student's "known spells" if they didn't already know them, spell levels are respected, and proficiency cannot go above 100%. Enclose these queries in a transaction so there is no risk of partial updates.
 
 ### The Winning House
