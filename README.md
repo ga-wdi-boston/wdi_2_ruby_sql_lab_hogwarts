@@ -68,7 +68,7 @@ Implement each of the following behaviors as specified. Add the SQL queries to a
 
 ### Admitting Students
 
-* **Ruby:** Students can only be admitted to a house through a method that checks whether they are at least 10 years old, and throws an error otherwise. If the student is added, they have their year set to 1 and their admission date set to the current date.
+* **Ruby:** Students can only be admitted to a house through a method that checks whether they are at least 10 years old, and throws an error otherwise. If the student is added, they have their year set to 1, their admission date set to the current date, and their house reference set appropriately.
 * **SQL:** Create a new student who is 10 years old, but does not have their year or admission date set. Then write a statement that will admit this student into a house, set their year to 1, and set their admission date to the current date.
 
 ### Awarding House Points
