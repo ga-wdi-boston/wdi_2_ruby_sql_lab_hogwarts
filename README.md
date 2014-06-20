@@ -48,7 +48,34 @@ In a `.sql` file, write commands that will insert a variety of data into the dat
 
 Then, in a `.rb` file, require the classes you created in Step 2 and write code that will create a mirror of your SQL data as Ruby objects. Of course, unlike your SQL data this will not be saved anywhere, but run your file with a `binding.pry` at the end to make sure it works.
 
-## Step 4: Behavior
+## Step 5: Behavior
 
-* Students can only be added to a house through a method that checks whether they are at least 10 years old, and throws an error otherwise. If the student is added, they have their year set to 1 and their admission date set to the current date.
-* Students have a method that allows them to practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%.
+Implement each of the following behaviors as a SQL query and/or a Ruby method as specified. Add the SQL queries to a separate `.sql` file, and add example uses of your Ruby methods to the `.rb` file you created in Step 3.
+
+### Admitting Students
+
+* **Ruby:** Students can only be admitted to a house through a method that checks whether they are at least 10 years old, and throws an error otherwise. If the student is added, they have their year set to 1 and their admission date set to the current date.
+* **SQL:** Create a new student who is 10 years old, but does not have their year or admission date set. Then write a statement that will admit this student into a house, set their year to 1, and set their admission date to the current date.
+
+### Awarding House Points
+
+* **Ruby:** Teachers may award or subtract points from a student's house depending on their behavior. Implement this either as a method on students, or a method on the school that accepts a student. The key is that you must start from the student.
+* **SQL:** Write a SQL statement that will award or subtract points from a specific student's house. Start from the student, and do not specify the house directly.
+
+### Practicing Spells
+
+* **Ruby:** Students can practice a specific spell. If they don't already know the spell, it becomes part of their "known spells" and starts at 0% proficiency. If the spell is already known, its proficiency increases by 1%, unless it is already at 100%.
+* **Ruby:** The school can hold a "workshop" for a specific category of spell. This will allow all students to practice all spells in that category *which are at their level or lower* 10 times.
+* **SQL:** Write a set of SQL statements that will perform the "workshop" behavior described above for some arbitrary category. Make sure spells are added to a student's "known spells" if they didn't already know them, spell levels are respected, and proficiency cannot go above 100%. Enclose these queries in a transaction so there is no risk of partial updates.
+
+### The Winning House
+
+* **Ruby:** At the end of the school year, whichever house has the most points is given a prize. Write a School method that determines which house has the most points.
+* **SQL:** Write a SQL statement that makes this same determination. The result should be only the name of the winning house.
+
+### Summer Break
+
+* **Ruby:** Over the summer, two things happen. Write a School method that does both of these:
+  1. All students' years are increased by 1. The exception is students who are at year 7, who instead graduate from the school. Their alumni status should be updated accordingly.
+  2. All students lose 10% proficiency in all of their spells. If this would take their proficiency below 0%, they will forget the spell entirely &ndash; it is removed from their "known spells".
+* **SQL:** Write a set of SQL statements that will perform the behaviors described above (wrapped in a transaction as before).
