@@ -17,6 +17,8 @@ create table schools(
   , name text not null
 );
 
+create index on schools(name);
+
 insert into schools (id, name) values (1, 'Hogwarts');
 
 --
@@ -29,6 +31,8 @@ create table houses(
   , animal text not null
   , points integer default 0
 );
+
+create index on houses(name);
 
 insert into houses (id, school_id, name, animal)
 values (1, 1, 'Gryffindor', 'Lion')
@@ -50,6 +54,10 @@ create table students(
   , admission_date integer
   , alumni_status boolean default false
 );
+
+create index on students(name);
+create index on students(year);
+create index on students(alumni_status);
 
 insert into students (id, school_id, house_id, name, gender, birth_date, admission_date, year, alumni_status)
   values (1, 1, 1, 'Harry Potter', 'M', '07-31-1980', '1991', 7, true)
@@ -80,6 +88,9 @@ create table spells(
   , level integer
 );
 
+create index on spells(name);
+create index on spells(category);
+
 insert into spells (id, category, name, incantation, level)
   values (1, 'Charm', 'Levitation', 'Wingardium Leviosa', 1)
   , (2, 'Charm', 'Wand-Lighting', 'Lumos', 1)
@@ -96,8 +107,7 @@ insert into spells (id, category, name, incantation, level)
   , (13, 'Curse', 'Cruciatus', 'Crucio', 6)
   , (14, 'Curse', 'Imperius', 'Imperio', 6)
   , (15, 'Curse', 'Avada Kedavra', 'Avada Kedavra', 7);
-
-
+--
 --
 -- Schools-Spells table
 -- Intersection table between Schools and Spells
@@ -107,6 +117,9 @@ create table school_spells(
   , school_id integer not null references schools(id)
   , spell_id integer not null references spells(id)
 );
+
+create index on school_spells(school_id);
+create index on school_spells(spell_id);
 
 insert into school_spells(id, school_id, spell_id)
   values (1, 1, 1)
@@ -135,20 +148,27 @@ create table known_spells(
   , last_used date default null
 );
 
+create index on known_spells(proficiency);
+
 --
--- Add all spells to all students.
+-- Add all eligible spells to all students.
 --
 DO $$
 DECLARE
+  l_proficiency INTEGER default 0;
   spells_csr CURSOR FOR SELECT * FROM spells;
   students_csr CURSOR FOR SELECT * FROM students;
-  l_proficiency INTEGER default 0;
 BEGIN
-  FOR r_spell IN spells_csr LOOP
-    FOR r_student IN students_csr LOOP
+  FOR r_student IN students_csr LOOP
+    FOR r_spell IN spells_csr LOOP
+      --
+      -- Test if student is eligible to learn the spell
+      --
       IF r_spell.level <= r_student.year THEN
-        -- Set a random proficiency level between 20 and 100.
+        --
+        -- Set a random proficiency level between 10 and 100.
         -- Assumes only Muggles could get a score of 0.
+        --
         l_proficiency = 10 + ROUND(random() * 90);
 
         INSERT INTO known_spells (student_id, spell_id, proficiency)
