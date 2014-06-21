@@ -5,7 +5,7 @@
 --
 -- Hogwarts database
 --
-delete database if exists hogwarts;
+drop database if exists hogwarts;
 create database hogwarts;
 \c hogwarts
 
@@ -17,7 +17,7 @@ create table schools(
   , name text not null
 );
 
-insert into school (id, name) values (1, 'Hogwarts');
+insert into schools (id, name) values (1, 'Hogwarts');
 
 --
 -- Houses table
@@ -27,14 +27,14 @@ create table houses(
   , school_id integer not null references schools(id)
   , name text not null
   , animal text not null
-  , points integer default = 0
+  , points integer default 0
 );
 
 insert into houses (id, school_id, name, animal)
 values (1, 1, 'Gryffindor', 'Lion')
   , (2, 1, 'Slytherin', 'Snake')
   , (3, 1, 'Ravenclaw', 'Eagle')
-  , (4, 1, 'Hufflepuff', 'Badger')
+  , (4, 1, 'Hufflepuff', 'Badger');
 
 --
 -- Students table
@@ -42,13 +42,13 @@ values (1, 1, 'Gryffindor', 'Lion')
 create table students(
   id integer primary key
   , school_id integer not null references schools(id)
-  , house_id integer references house(id)
+  , house_id integer references houses(id)
   , name text not null
   , gender text
   , year text
   , birth_date date
-  , admission_date date
-  , alumni_status boolean default = 0
+  , admission_date integer
+  , alumni_status boolean default false
 );
 
 insert into students (id, school_id, house_id, name, gender, birth_date, admission_date)
@@ -56,8 +56,8 @@ insert into students (id, school_id, house_id, name, gender, birth_date, admissi
   , (2, 1, 1, 'Ron Weasley', 'M', '03-01-1980', '1991')
   , (3, 1, 1, 'Hermione Granger', 'F', '09-19-1979', '1991')
   , (4, 1, 1, 'Ginny Weasley', 'F', '08-11-1981', '1992')
-  , (5, 2, 2, 'Draco Malfoy', 'M', '06-05-1980', '1991')
-  , (6, 2, 2, 'Vincent Crabbe', 'M', NULL, '1991')
+  , (5, 1, 2, 'Draco Malfoy', 'M', '06-05-1980', '1991')
+  , (6, 1, 2, 'Vincent Crabbe', 'M', NULL, '1991')
   , (7, 1, 2, 'Gregory Goyle', 'M', NULL, '1991')
   , (8, 1, 2, 'Pansy Parkinson', 'F', NULL, '1991')
   , (9, 1, 3, 'Luna Lovegood', 'F', NULL, '1992')
@@ -67,7 +67,7 @@ insert into students (id, school_id, house_id, name, gender, birth_date, admissi
   , (13, 1, 4, 'Cedric Diggory', 'M', NULL, '1988')
   , (14, 1, 4, 'Susan Bones', 'F', NULL, '1991')
   , (15, 1, 4, 'Hannah Abbott', 'F', NULL, '1991')
-  , (16, 1, 4, 'Justin Finch-Fletchley', 'M', NULL, '1991')
+  , (16, 1, 4, 'Justin Finch-Fletchley', 'M', NULL, '1991');
 
 --
 -- Spells table
@@ -92,7 +92,7 @@ insert into spells (id, category, name, incantation, level)
   , (9, 'Spell', 'Stunning', 'Stupefy', 5)
   , (10, 'Spell', 'Fire-Making', 'Incendio', 5)
   , (11, 'Spell', 'Water-Making', 'Aguamenti', 6)
-  , (12, 'Spell', 'Non-Verbal', '', 6)
+  , (12, 'Spell', 'Non-Verbal', '', 6);
 
 
 --
@@ -107,17 +107,17 @@ create table school_spells(
 
 insert into school_spells(id, school_id, spell_id)
   values (1, 1, 1)
-  , (1, 1, 2)
-  , (1, 1, 3)
-  , (1, 1, 4)
-  , (1, 1, 5)
-  , (1, 1, 6)
-  , (1, 1, 7)
-  , (1, 1, 8)
-  , (1, 1, 9)
-  , (1, 1, 10)
-  , (1, 1, 11)
-  , (1, 1, 12)
+  , (2, 1, 2)
+  , (3, 1, 3)
+  , (4, 1, 4)
+  , (5, 1, 5)
+  , (6, 1, 6)
+  , (7, 1, 7)
+  , (8, 1, 8)
+  , (9, 1, 9)
+  , (10, 1, 10)
+  , (11, 1, 11)
+  , (12, 1, 12);
 
 --
 -- Known Spells table
@@ -125,10 +125,10 @@ insert into school_spells(id, school_id, spell_id)
 --
 create table known_spells(
   id integer primary key
-  student_id integer not null
-  spell_id integer not null
-  proficiency integer default 0
-  last_used date
+  , student_id integer not null
+  , spell_id integer not null
+  , proficiency integer default 0
+  , last_used date
 );
 
 insert into known_spells (id, student_id, spell_id)
@@ -163,4 +163,4 @@ insert into known_spells (id, student_id, spell_id)
   , (29, 15, 1)
   , (30, 15, 2)
   , (31, 16, 1)
-  , (32, 16, 2)
+  , (32, 16, 2);
