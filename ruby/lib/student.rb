@@ -3,7 +3,7 @@ class Student
   attr_accessor :alumni_status, :spells
 
   def initialize(name:, gender:, year:, birth_date:, admission_date:, alumni_status: false, house:)
-    @name, @gender, @birth_date, @admission_date, @alumni_status, @house = name, gender, birth_date, admission_date, alumni_status, house
+    @name, @gender, @year, @birth_date, @admission_date, @alumni_status, @house = name, gender, year, birth_date, admission_date, alumni_status, house
     @spells = []
   end
 end

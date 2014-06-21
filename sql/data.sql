@@ -21,7 +21,7 @@ WITH ins (name, gender, year, birth_date, admission_date, alumni_status, house) 
 INSERT INTO students
   (name, gender, year, birth_date, admission_date, alumni_status, house_id)
 SELECT
-  ins.name, ins.gender, ins.year, ins.birth_date::date, ins.admission_date::date, ins.alumni_status::bit, houses.id
+  ins.name, ins.gender, ins.year, ins.birth_date::date, ins.admission_date::date, ins.alumni_status::boolean, houses.id
 FROM
   ins JOIN houses
     ON ins.house = houses.name;

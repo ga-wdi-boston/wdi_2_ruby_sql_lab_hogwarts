@@ -1,5 +1,5 @@
 class Spell
-  attr_reader :name, :incantation, :level
+  attr_reader :name, :incantation, :category, :level
   attr_accessor :students
 
   def initialize(name:, incantation:, category:, level:)

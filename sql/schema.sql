@@ -17,10 +17,10 @@ CREATE TABLE students (
   id SERIAL PRIMARY KEY,
   gender TEXT,
   name TEXT,
-  year TEXT,
+  year INTEGER,
   birth_date DATE,
   admission_date DATE,
-  alumni_status BIT,
+  alumni_status BOOLEAN,
   house_id INTEGER REFERENCES houses
 );
 
