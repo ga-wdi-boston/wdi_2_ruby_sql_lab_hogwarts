@@ -60,9 +60,20 @@ SELECT houses.name, students.year, students.name
 -- which is the sum of the proficiency scores of all students in the house
 -- for all spells in that category. Find out which spell category each house
 -- is most proficient in, using this metric.
-SELECT houses.name, spells.category, SUM(known_spells.proficiency) AS total_proficiency
-  FROM houses, students, spells, known_spells
-  WHERE students.house_id = houses.id
-    AND known_spells.students_id = students.id
-    AND known_spells.spells_id = spells.id
-  GROUP BY houses.name, spells.category;
+WITH houses_total_proficiency AS (
+  SELECT houses.name, spells.category, SUM(known_spells.proficiency) AS total_proficiency
+    FROM houses, students, spells, known_spells
+    WHERE students.house_id = houses.id
+      AND known_spells.students_id = students.id
+      AND known_spells.spells_id = spells.id
+    GROUP BY houses.name, spells.category
+  ), houses_max_proficiency AS (
+  SELECT name, MAX(total_proficiency) AS max_proficiency
+    FROM houses_total_proficiency
+    GROUP BY name
+  )
+SELECT houses_max_proficiency.name, houses_total_proficiency.category
+    FROM houses_total_proficiency, houses_max_proficiency
+    WHERE houses_total_proficiency.total_proficiency = houses_max_proficiency.max_proficiency
+      AND houses_total_proficiency.name = houses_max_proficiency.name
+    GROUP BY houses_max_proficiency.name, houses_total_proficiency.category;
