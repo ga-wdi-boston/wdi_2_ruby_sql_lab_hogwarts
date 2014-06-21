@@ -10,6 +10,7 @@ require_relative 'student'
 require_relative 'spell'
 require_relative 'known_spell'
 
+# Create students
 st1 = Student.new(name: 'Harry Potter', gender: 'M', birth_date: '07-31-1980', admission_date: '1991')
 st2 = Student.new(name: 'Ron Weasley', gender: 'M', birth_date: '03-01-1980', admission_date: '1991')
 st3 = Student.new(name: 'Hermione Granger', gender: 'F', birth_date: '09-19-1979', admission_date: '1991')
@@ -27,12 +28,14 @@ st14 = Student.new(name: 'Susan Bones', gender: 'F', admission_date: '1991')
 st15 = Student.new(name: 'Hannah Abbott', gender: 'F', admission_date: '1991')
 st16 = Student.new(name: 'Justin Finch-Fletchley', gender: 'M', admission_date: '1991')
 
+# Create houses and add students
 gryffindor = House.new(name: 'Gryffindor', animal: 'Lion', students: [st1, st2, st3, st4])
 ravenclaw = House.new(name: 'Ravenclaw', animal: 'Eagle', students: [st5, st6, st7, st8])
 slytherin = House.new(name: 'Slytherin', animal: 'Snake', students: [st9, st10, st11, st12])
 hufflepuff = House.new(name: 'Hufflepuff', animal: 'Badger', students: [st13, st14, st15, st16])
 houses = [griffindor, ravenclaw, slytherin, hufflepuff]
 
+# Create spells
 spell1 = Spell.new(name: 'Levitation', category: 'Charm', incantation: 'Wingardium Leviosa', level: 1)
 spell3 = Spell.new(name: 'Wand-Lighting ', category: 'Charm', incantation: 'Lumos ', level: 1)
 spell4 = Spell.new(name: 'Arresto Momentum', category: 'Charm', incantation: 'Arresto Momentum', level: 2)
@@ -47,8 +50,10 @@ spell11 = Spell.new(name: 'Water-Making', category: 'Spell', incantation: 'Aguam
 spell12 = Spell.new(name: 'Non-Verbal', category: 'Spell', incantation: '', level: 6)
 spells = [spell1, spell2, spell3, spell4, spell5, spell6, spell7, spell8, spell9, spell10, spell11, spell12]
 
+# Create school and add houses and spells
 school = School.new(name: 'Hogwarts', houses, spells)
 
+# Add spells to students
 st1.add_spell(sp1)
 st1.add_spell(sp2)
 st2.add_spell(sp1)

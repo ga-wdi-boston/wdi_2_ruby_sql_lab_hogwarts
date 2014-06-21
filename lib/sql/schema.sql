@@ -2,12 +2,16 @@
 -- Blair Caple
 -- June 20, 2014
 
+--
+-- Hogwarts database
+--
 delete database if exists hogwarts;
 create database hogwarts;
 \c hogwarts
 
-
-# Schools
+--
+-- Schools table
+--
 create table schools(
   id integer primary key
   , name text not null
@@ -15,8 +19,9 @@ create table schools(
 
 insert into school (id, name) values (1, 'Hogwarts');
 
-
-# Houses
+--
+-- Houses table
+--
 create table houses(
   id integer primary key
   , school_id integer not null references schools(id)
@@ -31,8 +36,9 @@ values (1, 1, 'Gryffindor', 'Lion')
   , (3, 1, 'Ravenclaw', 'Eagle')
   , (4, 1, 'Hufflepuff', 'Badger')
 
-
-# Students
+--
+-- Students table
+--
 create table students(
   id integer primary key
   , school_id integer not null references schools(id)
@@ -63,8 +69,9 @@ insert into students (id, school_id, house_id, name, gender, birth_date, admissi
   , (15, 1, 4, 'Hannah Abbott', 'F', NULL, '1991')
   , (16, 1, 4, 'Justin Finch-Fletchley', 'M', NULL, '1991')
 
-
-# Spells
+--
+-- Spells table
+--
 create table spells(
   id integer primary key
   , category text not null
@@ -88,7 +95,10 @@ insert into spells (id, category, name, incantation, level)
   , (12, 'Spell', 'Non-Verbal', '', 6)
 
 
-# Intersection table between Schools and Spells
+--
+-- Schools-Spells table
+-- Intersection table between Schools and Spells
+--
 create table school_spells(
   id integer primary key
   , school_id integer not null references schools(id)
@@ -109,7 +119,10 @@ insert into school_spells(id, school_id, spell_id)
   , (1, 1, 11)
   , (1, 1, 12)
 
-# Intersection table between Students and Spells
+--
+-- Known Spells table
+-- Intersection table between Students and Spells
+--
 create table known_spells(
   id integer primary key
   student_id integer not null
