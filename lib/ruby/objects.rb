@@ -11,11 +11,11 @@ require_relative 'spell'
 require_relative 'known_spell'
 
 # Create students
-st1 = Student.new(name: 'Harry Potter', gender: 'M', birth_date: '07-31-1980', admission_date: '1991')
-st2 = Student.new(name: 'Ron Weasley', gender: 'M', birth_date: '03-01-1980', admission_date: '1991')
-st3 = Student.new(name: 'Hermione Granger', gender: 'F', birth_date: '09-19-1979', admission_date: '1991')
-st4 = Student.new(name: 'Ginny Weasley', gender: 'F', birth_date: '08-11-1981', admission_date: '1992')
-st5 = Student.new(name: 'Draco Malfoy', gender: 'M', birth_date: '06-05-1980', admission_date: '1991')
+st1 = Student.new(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991')
+st2 = Student.new(name: 'Ron Weasley', gender: 'M', birth_date: '1980-03-01', admission_date: '1991')
+st3 = Student.new(name: 'Hermione Granger', gender: 'F', birth_date: '1979-09-19', admission_date: '1991')
+st4 = Student.new(name: 'Ginny Weasley', gender: 'F', birth_date: '1981-08-11', admission_date: '1992')
+st5 = Student.new(name: 'Draco Malfoy', gender: 'M', birth_date: '1980-06-05', admission_date: '1991')
 st6 = Student.new(name: 'Vincent Crabbe', gender: 'M', admission_date: '1991')
 st7 = Student.new(name: 'Gregory Goyle', gender: 'M', admission_date: '1991')
 st8 = Student.new(name: 'Pansy Parkinson', gender: 'F', admission_date: '1991')
@@ -27,13 +27,14 @@ st13 = Student.new(name: 'Cedric Diggory', gender: 'M', admission_date: '1988')
 st14 = Student.new(name: 'Susan Bones', gender: 'F', admission_date: '1991')
 st15 = Student.new(name: 'Hannah Abbott', gender: 'F', admission_date: '1991')
 st16 = Student.new(name: 'Justin Finch-Fletchley', gender: 'M', admission_date: '1991')
+students = [st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, st11, st12, st13, st14, st15, st16]
 
 # Create houses and add students
 gryffindor = House.new(name: 'Gryffindor', animal: 'Lion', students: [st1, st2, st3, st4])
 ravenclaw = House.new(name: 'Ravenclaw', animal: 'Eagle', students: [st5, st6, st7, st8])
 slytherin = House.new(name: 'Slytherin', animal: 'Snake', students: [st9, st10, st11, st12])
 hufflepuff = House.new(name: 'Hufflepuff', animal: 'Badger', students: [st13, st14, st15, st16])
-houses = [griffindor, ravenclaw, slytherin, hufflepuff]
+houses = [gryffindor, ravenclaw, slytherin, hufflepuff]
 
 # Create spells
 spell1 = Spell.new(name: 'Levitation', category: 'Charm', incantation: 'Wingardium Leviosa', level: 1)
@@ -51,40 +52,9 @@ spell12 = Spell.new(name: 'Non-Verbal', category: 'Spell', incantation: '', leve
 spells = [spell1, spell2, spell3, spell4, spell5, spell6, spell7, spell8, spell9, spell10, spell11, spell12]
 
 # Create school and add houses and spells
-school = School.new(name: 'Hogwarts', houses, spells)
+school = School.new(name: 'Hogwarts', houses: houses, spells: spells)
 
 # Add spells to students
-st1.add_spell(sp1)
-st1.add_spell(sp2)
-st2.add_spell(sp1)
-st2.add_spell(sp2)
-st3.add_spell(sp1)
-st3.add_spell(sp2)
-st4.add_spell(sp1)
-st4.add_spell(sp2)
-st5.add_spell(sp1)
-st5.add_spell(sp2)
-st6.add_spell(sp1)
-st6.add_spell(sp2)
-st7.add_spell(sp1)
-st7.add_spell(sp2)
-st8.add_spell(sp1)
-st8.add_spell(sp2)
-st9.add_spell(sp1)
-st9.add_spell(sp2)
-st10.add_spell(sp1)
-st10.add_spell(sp2)
-st11.add_spell(sp1)
-st11.add_spell(sp2)
-st12.add_spell(sp1)
-st12.add_spell(sp2)
-st13.add_spell(sp1)
-st13.add_spell(sp2)
-st14.add_spell(sp1)
-st14.add_spell(sp2)
-st15.add_spell(sp1)
-st15.add_spell(sp2)
-st16.add_spell(sp1)
-st16.add_spell(sp2)
+students.each { |e| e.learn_spells(spells) }
 
 binding.pry

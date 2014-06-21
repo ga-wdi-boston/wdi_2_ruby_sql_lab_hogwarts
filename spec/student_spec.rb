@@ -21,18 +21,30 @@ describe Student do
     end
   end
 
-  describe '#add_spell' do
+  describe '#learn_spell' do
     it 'can add a spell' do
       student = create_student
-      expect(student.add_spell(create_spell)).to eq true
+      expect(student.learn_spell(create_spell)).to eq true
     end
 
     it 'cannot add a duplicate spell' do
       student = create_student
       spell = create_spell
-      student.add_spell(spell)
+      student.learn_spell(spell)
 
-      expect(student.add_spell(spell)).to eq false
+      expect(student.learn_spell(spell)).to eq false
+    end
+  end
+
+  describe '#learn_spells' do
+    it 'adds a collection of spells' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      spell3 = create_spell(name: 'Disarming')
+      student.learn_spells([spell1, spell2, spell3])
+
+      expect(student.known_spells.size).to eq 3
     end
   end
 
@@ -40,7 +52,7 @@ describe Student do
     Student.new(name: name, gender: gender, birth_date: birth_date, admission_date: admission_date)
   end
 
-  def create_spell
-    Spell.new(name: 'Levitation', category: 'Charm', incantation: 'Wingardium Leviosa', level: 1)
+  def create_spell(name: 'Levitation', category: 'Charm', incantation: 'Wingardium Leviosa', level: 1)
+    Spell.new(name: name, category: category, incantation: incantation, level: level)
   end
 end
