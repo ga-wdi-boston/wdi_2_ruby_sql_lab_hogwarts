@@ -16,7 +16,7 @@ describe Student do
       expect(st.gender).to eq 'M'
       expect(st.birth_date.to_s).to eq '1980-07-31'
       expect(st.admission_date).to eq '1991'
-      expect(st.year).to eq nil
+      expect(st.year).to eq 7
       expect(st.status).to eq false
     end
   end
@@ -34,6 +34,13 @@ describe Student do
 
       expect(student.learn_spell(spell)).to eq false
     end
+
+    it 'cannot learn a spell if too young' do
+      student = create_student(year: 3)
+      spell = create_spell(level: 4)
+
+      expect(student.learn_spell(spell)).to eq false
+    end
   end
 
   describe '#learn_spells' do
@@ -48,8 +55,8 @@ describe Student do
     end
   end
 
-  def create_student(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991')
-    Student.new(name: name, gender: gender, birth_date: birth_date, admission_date: admission_date)
+  def create_student(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991', year: 7)
+    Student.new(name: name, gender: gender, birth_date: birth_date, admission_date: admission_date, year: year)
   end
 
   def create_spell(name: 'Levitation', category: 'Charm', incantation: 'Wingardium Leviosa', level: 1)

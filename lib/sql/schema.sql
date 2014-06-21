@@ -45,29 +45,29 @@ create table students(
   , house_id integer references houses(id)
   , name text not null
   , gender text
-  , year text
+  , year integer default 1
   , birth_date date
   , admission_date integer
   , alumni_status boolean default false
 );
 
-insert into students (id, school_id, house_id, name, gender, birth_date, admission_date)
-  values (1, 1, 1, 'Harry Potter', 'M', '07-31-1980', '1991')
-  , (2, 1, 1, 'Ron Weasley', 'M', '03-01-1980', '1991')
-  , (3, 1, 1, 'Hermione Granger', 'F', '09-19-1979', '1991')
-  , (4, 1, 1, 'Ginny Weasley', 'F', '08-11-1981', '1992')
-  , (5, 1, 2, 'Draco Malfoy', 'M', '06-05-1980', '1991')
-  , (6, 1, 2, 'Vincent Crabbe', 'M', NULL, '1991')
-  , (7, 1, 2, 'Gregory Goyle', 'M', NULL, '1991')
-  , (8, 1, 2, 'Pansy Parkinson', 'F', NULL, '1991')
-  , (9, 1, 3, 'Luna Lovegood', 'F', NULL, '1992')
-  , (10, 1, 3, 'Cho Chang', 'F', NULL, '1990')
-  , (11, 1, 3, 'Padma Patil', 'F', NULL, '1991')
-  , (12, 1, 3, 'Marcus Belby', 'M', NULL, NULL)
-  , (13, 1, 4, 'Cedric Diggory', 'M', NULL, '1988')
-  , (14, 1, 4, 'Susan Bones', 'F', NULL, '1991')
-  , (15, 1, 4, 'Hannah Abbott', 'F', NULL, '1991')
-  , (16, 1, 4, 'Justin Finch-Fletchley', 'M', NULL, '1991');
+insert into students (id, school_id, house_id, name, gender, birth_date, admission_date, year, alumni_status)
+  values (1, 1, 1, 'Harry Potter', 'M', '07-31-1980', '1991', 7, true)
+  , (2, 1, 1, 'Ron Weasley', 'M', '03-01-1980', '1991', 6, false)
+  , (3, 1, 1, 'Hermione Granger', 'F', '09-19-1979', '1991', 6, false)
+  , (4, 1, 1, 'Ginny Weasley', 'F', '08-11-1981', '1992', 5, false)
+  , (5, 1, 2, 'Draco Malfoy', 'M', '06-05-1980', '1991', 6, false)
+  , (6, 1, 2, 'Vincent Crabbe', 'M', NULL, '1991', 6, false)
+  , (7, 1, 2, 'Gregory Goyle', 'M', NULL, '1991', 6, false)
+  , (8, 1, 2, 'Pansy Parkinson', 'F', NULL, '1991', 6, false)
+  , (9, 1, 3, 'Luna Lovegood', 'F', NULL, '1992', 5, false)
+  , (10, 1, 3, 'Cho Chang', 'F', NULL, '1990', 7, true)
+  , (11, 1, 3, 'Padma Patil', 'F', NULL, '1991', 6, false)
+  , (12, 1, 3, 'Marcus Belby', 'M', NULL, NULL, 1, false)
+  , (13, 1, 4, 'Cedric Diggory', 'M', NULL, '1988', 4, true)
+  , (14, 1, 4, 'Susan Bones', 'F', NULL, '1991', 6, false)
+  , (15, 1, 4, 'Hannah Abbott', 'F', NULL, '1991', 6, false)
+  , (16, 1, 4, 'Justin Finch-Fletchley', 'M', NULL, '1991', 6, false);
 
 --
 -- Spells table
@@ -92,7 +92,10 @@ insert into spells (id, category, name, incantation, level)
   , (9, 'Spell', 'Stunning', 'Stupefy', 5)
   , (10, 'Spell', 'Fire-Making', 'Incendio', 5)
   , (11, 'Spell', 'Water-Making', 'Aguamenti', 6)
-  , (12, 'Spell', 'Non-Verbal', '', 6);
+  , (12, 'Spell', 'Non-Verbal', '', 6)
+  , (13, 'Curse', 'Cruciatus', 'Crucio', 6)
+  , (14, 'Curse', 'Imperius', 'Imperio', 6)
+  , (15, 'Curse', 'Avada Kedavra', 'Avada Kedavra', 7);
 
 
 --
@@ -139,11 +142,18 @@ DO $$
 DECLARE
   spells_csr CURSOR FOR SELECT * FROM spells;
   students_csr CURSOR FOR SELECT * FROM students;
+  l_proficiency INTEGER default 0;
 BEGIN
   FOR r_spell IN spells_csr LOOP
     FOR r_student IN students_csr LOOP
-      INSERT INTO known_spells (student_id, spell_id)
-        VALUES (r_student.id, r_spell.id);
+      IF r_spell.level <= r_student.year THEN
+        -- Set a random proficiency level between 20 and 100.
+        -- Assumes only Muggles could get a score of 0.
+        l_proficiency = 10 + ROUND(random() * 90);
+
+        INSERT INTO known_spells (student_id, spell_id, proficiency)
+          VALUES (r_student.id, r_spell.id, l_proficiency);
+      END IF;
     END LOOP;
   END LOOP;
 END$$;
