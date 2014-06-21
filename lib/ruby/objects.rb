@@ -11,13 +11,13 @@ require_relative 'spell'
 require_relative 'known_spell'
 
 # Create students
-st1 = Student.new(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991', year: 7)
-st2 = Student.new(name: 'Ron Weasley', gender: 'M', birth_date: '1980-03-01', admission_date: '1991', year: 6)
-st3 = Student.new(name: 'Hermione Granger', gender: 'F', birth_date: '1979-09-19', admission_date: '1991', year: 6)
-st4 = Student.new(name: 'Ginny Weasley', gender: 'F', birth_date: '1981-08-11', admission_date: '1992', year: 5)
-st5 = Student.new(name: 'Draco Malfoy', gender: 'M', birth_date: '1980-06-05', admission_date: '1991', year: 6)
-st6 = Student.new(name: 'Vincent Crabbe', gender: 'M', admission_date: '1991', year: 6)
-st7 = Student.new(name: 'Gregory Goyle', gender: 'M', admission_date: '1991', year: 6)
+potter = Student.new(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991', year: 7)
+r_weasley = Student.new(name: 'Ron Weasley', gender: 'M', birth_date: '1980-03-01', admission_date: '1991', year: 6)
+granger = Student.new(name: 'Hermione Granger', gender: 'F', birth_date: '1979-09-19', admission_date: '1991', year: 6)
+g_weasley = Student.new(name: 'Ginny Weasley', gender: 'F', birth_date: '1981-08-11', admission_date: '1992', year: 5)
+d_malfoy = Student.new(name: 'Draco Malfoy', gender: 'M', birth_date: '1980-06-05', admission_date: '1991', year: 6)
+crabbe = Student.new(name: 'Vincent Crabbe', gender: 'M', admission_date: '1991', year: 6)
+goyle = Student.new(name: 'Gregory Goyle', gender: 'M', admission_date: '1991', year: 6)
 st8 = Student.new(name: 'Pansy Parkinson', gender: 'F', admission_date: '1991', year: 6)
 st9 = Student.new(name: 'Luna Lovegood', gender: 'F', admission_date: '1992', year: 5)
 st10 = Student.new(name: 'Cho Chang', gender: 'F', admission_date: '1990', year: 7, status: true)
@@ -27,12 +27,12 @@ st13 = Student.new(name: 'Cedric Diggory', gender: 'M', admission_date: '1988', 
 st14 = Student.new(name: 'Susan Bones', gender: 'F', admission_date: '1991', year: 6)
 st15 = Student.new(name: 'Hannah Abbott', gender: 'F', admission_date: '1991', year: 6)
 st16 = Student.new(name: 'Justin Finch-Fletchley', gender: 'M', admission_date: '1991', year: 6)
-students = [st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, st11, st12,
+students = [potter, r_weasley, granger, g_weasley, d_malfoy, crabbe, goyle, st8, st9, st10, st11, st12,
   st13, st14, st15, st16]
 
 # Create houses and add students
-gryffindor = House.new(name: 'Gryffindor', animal: 'Lion', students: [st1, st2, st3, st4])
-ravenclaw = House.new(name: 'Ravenclaw', animal: 'Eagle', students: [st5, st6, st7, st8])
+gryffindor = House.new(name: 'Gryffindor', animal: 'Lion', students: [potter, r_weasley, granger, g_weasley])
+ravenclaw = House.new(name: 'Ravenclaw', animal: 'Eagle', students: [d_malfoy, crabbe, goyle, st8])
 slytherin = House.new(name: 'Slytherin', animal: 'Snake', students: [st9, st10, st11, st12])
 hufflepuff = House.new(name: 'Hufflepuff', animal: 'Badger', students: [st13, st14, st15, st16])
 houses = [gryffindor, ravenclaw, slytherin, hufflepuff]
@@ -62,4 +62,9 @@ school = School.new(name: 'Hogwarts', houses: houses, spells: spells)
 # Add spells to students
 students.each { |e| e.learn_spells(spells) }
 
-binding.pry
+# binding.pry
+
+# Assign global variables for querying from a different file
+$school = school
+$potter = potter
+$levitation = spell1

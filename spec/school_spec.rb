@@ -66,6 +66,14 @@ describe School do
     end
   end
 
+  describe '#current_students' do
+    it 'returns a list of all current students sorted alphbetically' do
+      school = create_school
+
+      expect(school.current_students.size).to eq 0
+    end
+  end
+
   # School factory
   def create_school
     School.new(name: 'Hogwarts')

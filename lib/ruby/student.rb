@@ -36,6 +36,20 @@ class Student
     result
   end
 
+  # Returns the student's proficiency in the given spell, or false if the
+  # student doesn't know the spell.
+  def knows_spell?(spell)
+    known_spells.each { |e| return e.proficiency if e.spell == spell }
+    false
+  end
+
+  # Returns a list of all known spell categories
+  def known_spell_categories
+    result = Set.new
+    known_spells.each { |e| result.add(e.spell.category) }
+    result.to_a.sort!
+  end
+
   # Adds the specified spell to the set of known spells for this student.
   # Returns true if the set of known spells did not contain the given spell,
   # false otherwise. The method will return false if the student is too
@@ -56,5 +70,10 @@ class Student
   # given collection that the student already knows are ignored.
   def learn_spells(collection)
     collection.each { |e| learn_spell(e) }
+  end
+
+  # Returns the student's aveage proficiency across all their known spells.
+  def avg_proficiency
+    (@known_spells.map(&:proficiency).reduce(0, &:+) / @known_spells.size).round
   end
 end

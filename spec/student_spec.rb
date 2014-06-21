@@ -55,6 +55,43 @@ describe Student do
     end
   end
 
+  describe '#knows_spell?' do
+    it 'returns the spell if the given spell is known' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      student.learn_spell(spell1)
+
+      expect(student.knows_spell?(spell1)).not_to eq false
+      expect(student.knows_spell?(spell2)).to eq false
+    end
+  end
+
+  describe '#known_spell_categories' do
+    it 'returns a collection of known spell categories' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      spell3 = create_spell(category: 'Curse')
+      student.learn_spells([spell1, spell2, spell3])
+
+      expect(student.known_spell_categories.size).to eq 2
+    end
+  end
+
+  describe '#average_proficiency' do
+    it 'returns the average proficiency level across all spells they know' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      spell3 = create_spell(category: 'Curse')
+      student.learn_spells([spell1, spell2, spell3])
+      ap = (student.known_spells.map(&:proficiency).reduce(0, &:+) / student.known_spells.size).round
+
+      expect(student.avg_proficiency).to eq ap
+    end
+  end
+
   def create_student(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991', year: 7)
     Student.new(name: name, gender: gender, birth_date: birth_date, admission_date: admission_date, year: year)
   end

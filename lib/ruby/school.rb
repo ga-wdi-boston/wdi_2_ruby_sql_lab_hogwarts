@@ -55,4 +55,31 @@ class School
     return false if success.nil?
     true
   end
+
+  # Returns a list of all students sorted alphabetically.
+  def students
+    result = []
+    @houses.each { |e| result << e.students }
+    result.flatten.sort_by { |e| e.name }
+  end
+
+  # Returns a hash of all current students where the keys are house name and
+  # the values are hashes. Within these hashes, the keys are year numbers and
+  # the values are arrays of students.
+  def current_student_roster
+    result = {}
+    @houses.each do |house|
+      result[house.name.to_sym] = house.current_students.group_by { |e| e.year }
+    end
+    result
+  end
+
+  # Returns a list of all current students sorted alphbetically.
+  def current_students
+    result = []
+    @houses.each do |e|
+      result << e.students.select { |student| !student.alumni_status? }
+    end
+    result.flatten.sort_by { |e| e.name }
+  end
 end
