@@ -6,16 +6,20 @@ delete database if exists hogwarts;
 create database hogwarts;
 \c hogwarts
 
-create table school(
+
+# Schools
+create table schools(
   id integer primary key
   , name text not null
 );
 
 insert into school (id, name) values (1, 'Hogwarts');
 
+
+# Houses
 create table houses(
   id integer primary key
-  , school_id integer not null references school(id)
+  , school_id integer not null references schools(id)
   , name text not null
   , animal text not null
   , points integer default = 0
@@ -27,6 +31,8 @@ values (1, 1, 'Gryffindor', 'Lion')
   , (3, 1, 'Ravenclaw', 'Eagle')
   , (4, 1, 'Hufflepuff', 'Badger')
 
+
+# Students
 create table students(
   id integer primary key
   , school_id integer not null references schools(id)
@@ -39,24 +45,71 @@ create table students(
   , alumni_status boolean default = 0
 );
 
-insert into students (id, school_id, house_id, name, gender)
-  values (1, 1, 1, 'Harry Potter', 'M')
-  , (2, 1, 1, 'Ron Weasley', 'M')
-  , (3, 1, 1, 'Hermione Granger', 'F')
-  , (4, 1, 1, 'Ginny Weasley', 'F')
-  , (5, 2, 2, 'Merlin Malfoy', 'M')
-  , (6, 2, 2, 'Vincent Crabbe', 'M')
-  , (7, 1, 2, 'Gregory Goyle', 'M')
-  , (8, 1, 2, 'Pansy Parkinson', 'F')
-  , (9, 1, 3, 'Luna Lovegood', 'F')
-  , (10, 1, 3, 'Cho Chang', 'F')
-  , (11, 1, 3, 'Padma Patil', 'F')
-  , (12, 1, 3, 'Marcus Belby', 'M')
-  , (13, 1, 4, 'Cedric Diggory', 'M')
-  , (14, 1, 4, 'Susan Bones', 'F')
-  , (15, 1, 4, 'Hannah Abbott', 'F')
-  , (16, 1, 4, 'Justin Finch-Fletchley', 'M')
+insert into students (id, school_id, house_id, name, gender, birth_date, admission_date)
+  values (1, 1, 1, 'Harry Potter', 'M', '07-31-1980', '1991')
+  , (2, 1, 1, 'Ron Weasley', 'M', '03-01-1980', '1991')
+  , (3, 1, 1, 'Hermione Granger', 'F', '09-19-1979', '1991')
+  , (4, 1, 1, 'Ginny Weasley', 'F', '08-11-1981', '1992')
+  , (5, 2, 2, 'Draco Malfoy', 'M', '06-05-1980', '1991')
+  , (6, 2, 2, 'Vincent Crabbe', 'M', NULL, '1991')
+  , (7, 1, 2, 'Gregory Goyle', 'M', NULL, '1991')
+  , (8, 1, 2, 'Pansy Parkinson', 'F', NULL, '1991')
+  , (9, 1, 3, 'Luna Lovegood', 'F', NULL, '1992')
+  , (10, 1, 3, 'Cho Chang', 'F', NULL, '1990')
+  , (11, 1, 3, 'Padma Patil', 'F', NULL, '1991')
+  , (12, 1, 3, 'Marcus Belby', 'M', NULL, NULL)
+  , (13, 1, 4, 'Cedric Diggory', 'M', NULL, '1988')
+  , (14, 1, 4, 'Susan Bones', 'F', NULL, '1991')
+  , (15, 1, 4, 'Hannah Abbott', 'F', NULL, '1991')
+  , (16, 1, 4, 'Justin Finch-Fletchley', 'M', NULL, '1991')
 
+
+# Spells
+create table spells(
+  id integer primary key
+  , category text not null
+  , name text not null
+  , incantation text
+  , level integer
+);
+
+insert into spells (id, category, name, incantation, level)
+  values (1, 'Charm', 'Levitation', 'Wingardium Leviosa', 1)
+  , (2, 'Charm', 'Wand-Lighting', 'Lumos', 1)
+  , (3, 'Charm', 'Arresto Momentum', 'Arresto Momentum', 2)
+  , (4, 'Charm', 'Memory', 'Obliviate', 2)
+  , (5, 'Charm', 'Freezing', 'Glacius', 3)
+  , (6, 'Charm', 'Disarming', 'Expelliarmus', 4)
+  , (7, 'Charm', 'Summoning', 'Accio', 4)
+  , (8, 'Charm', 'Mending', 'Reparo', 4)
+  , (9, 'Spell', 'Stunning', 'Stupefy', 5)
+  , (10, 'Spell', 'Fire-Making', 'Incendio', 5)
+  , (11, 'Spell', 'Water-Making', 'Aguamenti', 6)
+  , (12, 'Spell', 'Non-Verbal', '', 6)
+
+
+# Intersection table between Schools and Spells
+create table school_spells(
+  id integer primary key
+  , school_id integer not null references schools(id)
+  , spell_id integer not null references spells(id)
+);
+
+insert into school_spells(id, school_id, spell_id)
+  values (1, 1, 1)
+  , (1, 1, 2)
+  , (1, 1, 3)
+  , (1, 1, 4)
+  , (1, 1, 5)
+  , (1, 1, 6)
+  , (1, 1, 7)
+  , (1, 1, 8)
+  , (1, 1, 9)
+  , (1, 1, 10)
+  , (1, 1, 11)
+  , (1, 1, 12)
+
+# Intersection table between Students and Spells
 create table known_spells(
   id integer primary key
   student_id integer not null
@@ -98,22 +151,3 @@ insert into known_spells (id, student_id, spell_id)
   , (30, 15, 2)
   , (31, 16, 1)
   , (32, 16, 2)
-
-create table spells(
-  id integer primary key
-  , school_id integer not null references schools(id
-  , category text not null
-  , name text not null
-  , incantation text
-  , level integer
-);
-
-insert into spells (id, school_id, category, name, incantation, level)
-  values (1, 1, 'Charm', 'Ascendio', '', 1)
-  values (2, 1, 'Charm', 'Aresto Momentum', '', 1)
-  values (3, 1, 'Charm', 'Baubillious', '', 2)
-  values (4, 1, 'Curse', 'Crucio', '', 7)
-  values (5, 1, 'Curse', 'Expulso', '', 5)
-  values (6, 1, 'Curse', 'Petrificus Totalus', '', 6)
-  values (7, 1, 'Hex', 'Densaugeo', '', 2)
-  values (8, 1, 'Hex', 'Anteoculatia', '', 3)

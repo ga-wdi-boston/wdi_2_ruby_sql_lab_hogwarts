@@ -13,8 +13,9 @@ class House
   # Creates a new house with the given name and list of students.
   def initialize(school:, name:, animal:, students: nil)
     @school, @name, @animal = school, name, animal
-    @students = students.nil? ? [] : students
+    @students = []
     @points = 0
+    students.each { |e| add_student(e) } if !students.nil?
   end
 
   def students

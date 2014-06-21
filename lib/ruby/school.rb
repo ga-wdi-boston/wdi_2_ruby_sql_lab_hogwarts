@@ -11,8 +11,10 @@ class School
   # Creates a new school with the given name and list of houses and spells.
   def initialize(name:, houses: nil, spells: nil)
     @name = name
-    @houses = houses.nil? ? [] : houses
-    @spells = spells.nil? ? [] : spells
+    @houses = []
+    @spells = []
+    houses.each { |e| add_house(e) } if !houses.nil?
+    spells.each { |e| add_spell(e) } if !spells.nil?
   end
 
   def houses
