@@ -122,45 +122,28 @@ insert into school_spells(id, school_id, spell_id)
 --
 -- Known Spells table
 -- Intersection table between Students and Spells
+-- Note that the id is auto-incremented and not assigned.
 --
 create table known_spells(
-  id integer primary key
+  id serial primary key
   , student_id integer not null
   , spell_id integer not null
   , proficiency integer default 0
-  , last_used date
+  , last_used date default null
 );
 
-insert into known_spells (id, student_id, spell_id)
-  values (1, 1, 1)
-  , (2, 1, 2)
-  , (3, 2, 1)
-  , (4, 2, 2)
-  , (5, 3, 1)
-  , (6, 3, 2)
-  , (7, 4, 1)
-  , (8, 4, 2)
-  , (9, 5, 1)
-  , (10, 5, 2)
-  , (11, 6, 1)
-  , (12, 6, 2)
-  , (13, 7, 1)
-  , (14, 7, 2)
-  , (15, 8, 1)
-  , (16, 8, 2)
-  , (17, 9, 1)
-  , (18, 9, 2)
-  , (19, 10, 1)
-  , (20, 10, 2)
-  , (21, 11, 1)
-  , (22, 11, 2)
-  , (23, 12, 1)
-  , (24, 12, 2)
-  , (25, 13, 1)
-  , (26, 13, 2)
-  , (27, 14, 1)
-  , (28, 14, 2)
-  , (29, 15, 1)
-  , (30, 15, 2)
-  , (31, 16, 1)
-  , (32, 16, 2);
+--
+-- Add all spells to all students.
+--
+DO $$
+DECLARE
+  spells_csr CURSOR FOR SELECT * FROM spells;
+  students_csr CURSOR FOR SELECT * FROM students;
+BEGIN
+  FOR r_spell IN spells_csr LOOP
+    FOR r_student IN students_csr LOOP
+      INSERT INTO known_spells (student_id, spell_id)
+        VALUES (r_student.id, r_spell.id);
+    END LOOP;
+  END LOOP;
+END$$;
