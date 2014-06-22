@@ -7,6 +7,7 @@ require_relative 'school'
 
 # Represents a house in a school of magic.
 class House
+  class IneligibleCandidateError < ArgumentError; end
 
   attr_reader :id, :points
   attr_accessor :name, :school, :animal
@@ -35,16 +36,6 @@ class House
     result
   end
 
-  # Adds the specified student to the house.
-  # Returns true if this set did not already contain the specified element,
-  # false otherwise.
-  def add_student(student)
-    student.house = self
-    success = @students.add?(student)
-    return false if success.nil?
-    true
-  end
-
   # Returns an list of proficiencies for this house. The list is made of
   # arrays containing the spell category and the sum of the student's
   # proficiency for spells in that category.
@@ -58,5 +49,30 @@ class House
 
   def add_points(p)
     @points += p
+  end
+
+  # Admits the given candidate to this house. The method sets their admission
+  # date to today's date and their year 1. Returns true on success, false
+  # otherwise. Throws an IneligibleCandidateError if the candidate is less
+  # than 10 years old.
+  def admit_student(candidate)
+    today = Date.today
+    raise IneligibleCandidateError if candidate.birth_date.year + 10 > today.year
+    candidate.year = 1
+    candidate.admission_date = today.year
+    add_student(candidate)
+  end
+
+  private
+
+  # Adds the specified student to the house.
+  # Returns true if this set did not already contain the specified element,
+  # false otherwise. This is a utility class to auto-add students through the
+  # constructor.
+  def add_student(student)
+    student.house = self
+    success = @students.add?(student)
+    return false if success.nil?
+    true
   end
 end

@@ -45,11 +45,11 @@ values (1, 1, 'Gryffindor', 'Lion')
 --
 create table students(
   id integer primary key
-  , school_id integer not null references schools(id)
+  , school_id integer references schools(id)
   , house_id integer references houses(id)
   , name text not null
   , gender text
-  , year integer default 1
+  , year integer default 0
   , birth_date date
   , admission_date integer
   , alumni_status boolean default false
@@ -176,4 +176,69 @@ BEGIN
       END IF;
     END LOOP;
   END LOOP;
+END$$;
+
+--
+-- Step 5: Create a new student who is 10 years old, but does not have their
+-- year or admission date set. Then write a statement that will admit this
+-- student into a house, set their year to 1, and set their admission date
+-- to the current date.
+--
+-- Returns the next sequence number from the syudents table
+--
+CREATE OR REPLACE FUNCTION next_seq_number()
+  RETURNS INTEGER
+AS $$
+BEGIN
+  RETURN (SELECT st.id FROM students st ORDER BY st.id DESC LIMIT 1) + 1;
+END;
+$$ LANGUAGE plpgsql;
+--
+-- Admits the student with the given id to the given house
+--
+CREATE OR REPLACE FUNCTION admit_student(
+    IN p_student_id INTEGER,
+    IN p_house_id INTEGER,
+    IN p_school_id INTEGER
+) RETURNS VOID
+AS $$
+DECLARE
+  l_date INTEGER;
+BEGIN
+  -- Get the current year
+  l_date := date_part('year', NOW())::integer;
+
+  -- Update the student record
+  UPDATE students
+    SET year = 1
+    , admission_date = l_date
+    , school_id = p_school_id
+    , house_id = p_house_id
+    WHERE id = p_student_id;
+END;
+$$ LANGUAGE plpgsql;
+--
+-- Runs the code block
+--
+DO $$
+DECLARE
+  l_seq INTEGER;
+  l_school_id INTEGER;
+  l_house_id INTEGER;
+BEGIN
+  -- Gets the next id number.
+  l_seq := next_seq_number();
+
+  -- Populate the local school and house variables.
+  SELECT h.id, h.school_id
+    FROM houses h
+    WHERE h.name = 'Gryffindor'
+    INTO l_house_id, l_school_id;
+
+  -- Create a new student.
+  INSERT INTO students (id, name, gender, birth_date)
+    VALUES (l_seq, 'Tom Riddle', 'M', '1926-12-31');
+
+  -- Admit the student to the school and house.
+  PERFORM admit_student(l_seq, l_house_id, l_school_id);
 END$$;

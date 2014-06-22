@@ -15,12 +15,13 @@ class Student
     :status
 
   # Creates a new student with the given information
-  def initialize(name:, gender:, year: 1, birth_date: nil,
+  def initialize(name:, gender:, year: year, birth_date: nil,
     admission_date: nil, status: false)
 
     @name, @gender, @year, @house, @admission_date, @status =
       name, gender, year, house, admission_date, status
     @birth_date = birth_date.nil? ? nil : Date.parse(birth_date)
+    @year = year.nil? ? 0 : year
     @known_spells = Set.new
   end
 
