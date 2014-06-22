@@ -161,14 +161,10 @@ DECLARE
 BEGIN
   FOR r_student IN students_csr LOOP
     FOR r_spell IN spells_csr LOOP
-      --
       -- Test if student is eligible to learn the spell
-      --
       IF r_spell.level <= r_student.year THEN
-        --
         -- Set a random proficiency level between 10 and 100.
         -- Assumes only Muggles could get a score of 0.
-        --
         l_proficiency = 10 + ROUND(random() * 90);
 
         INSERT INTO known_spells (student_id, spell_id, proficiency)
@@ -222,9 +218,9 @@ $$ LANGUAGE plpgsql;
 --
 DO $$
 DECLARE
-  l_seq INTEGER;
+  l_seq       INTEGER;
   l_school_id INTEGER;
-  l_house_id INTEGER;
+  l_house_id  INTEGER;
 BEGIN
   -- Gets the next id number.
   l_seq := next_seq_number();
@@ -250,7 +246,7 @@ END$$;
 --
 CREATE OR REPLACE FUNCTION change_points(
     IN p_student_id INTEGER,
-    IN p_points INTEGER) RETURNS VOID
+    IN p_points INTEGER) RETURNS void
 AS $$
 BEGIN
   UPDATE houses h
@@ -259,5 +255,60 @@ BEGIN
     SELECT st.house_id
     FROM students st
     WHERE st.id = p_student_id);
+END;
+$$ LANGUAGE plpgsql;
+
+--
+-- Step 5c: Write a set of SQL statements that will perform the "workshop"
+-- behavior described above for some arbitrary category. Make sure spells are
+-- added to a student's "known spells" if they didn't already know them, spell
+-- levels are respected, and proficiency cannot go above 100%. Enclose these
+-- queries in a transaction so there is no risk of partial updates.
+--
+-- Note: A straightforward solution for transaction control is to write a
+-- stored procedure as below. Any exception will be rolled back.
+--
+CREATE OR REPLACE FUNCTION practice_spell(
+    IN p_student_id INTEGER
+    , IN p_spell_id INTEGER
+) RETURNS void
+AS $$
+DECLARE
+  l_student     students%ROWTYPE;
+  l_spell       spells%ROWTYPE;
+  l_rec         known_spells%ROWTYPE;
+BEGIN
+  SAVEPOINT my_savepoint;
+
+  -- Fetch the known spell or create a new one.
+  SELECT * INTO l_rec
+    FROM known_spells
+    WHERE student_id = p_student_id AND spell_id = p_spell_id;
+  IF NOT FOUND THEN
+    -- Test if the student is eligible to learn the spell.
+    SELECT * INTO l_spell FROM spells WHERE id = p_spell_id;
+    SELECT * INTO l_student FROM students WHERE id = p_student_id;
+    IF l_spell.level > l.student.year THEN
+      RAISE EXCEPTION 'underage student for spell';
+    END IF;
+    -- Create the known spell and assign it to the record variable.
+    INSERT INTO known_spells (student_id, spell_id)
+      VALUES (p_student_id, p_spell_id);
+    SELECT * INTO l_rec
+      FROM known_spells
+      WHERE student_id = p_student_id AND spell_id = p_spell_id;
+  END IF;
+
+  -- Practice the spell
+  IF l_rec.proficiency < 100 THEN
+    l_rec.proficiency := l_rec.proficiency + 1;
+  END IF;
+  l_rec.last_used := current_date;
+
+  -- Update the record
+  UPDATE known_spells
+    SET proficiency = l_rec.proficiency
+    , last_used     = l_rec.last_used
+    WHERE id = l_rec.id;
 END;
 $$ LANGUAGE plpgsql;
