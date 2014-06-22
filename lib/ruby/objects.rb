@@ -62,9 +62,24 @@ school = School.new(name: 'Hogwarts', houses: houses, spells: spells)
 # Add spells to students
 students.each { |e| e.learn_spells(spells) }
 
+# Create more spells
+spell16 = Spell.new(name: 'Unlocking', category: 'Charm', incantation: 'Alohomora', level: 1)
+spell17 = Spell.new(name: 'Softening', category: 'Charm', incantation: 'Spongify ', level: 1)
+spell18 = Spell.new(name: 'Transfiguration', category: 'Spell', incantation: 'Avifors', level: 2)
+spell19 = Spell.new(name: 'Severing ', category: 'Charm', incantation: 'Diffindo', level: 2)
+spell20 = Spell.new(name: 'Lumos Maxima', category: 'Charm', incantation: 'Lumos Maxima', level: 3)
+spell21 = Spell.new(name: 'Seize and Pull', category: 'Charm', incantation: 'Carpe Retractum', level: 3)
+spell22 = Spell.new(name: 'Banishing ', category: 'Charm', incantation: 'Depulso', level: 4)
+spell23 = Spell.new(name: 'Shield', category: 'Charm', incantation: 'Protego', level: 5)
+spell24 = Spell.new(name: 'Silencing', category: 'Charm', incantation: 'Silencio', level: 5)
+patronus = Spell.new(name: 'Patronus', category: 'Charm', incantation: 'Expecto Patronum', level: 5)
+more_spells = [spell16, spell17, spell18, spell19, spell20, spell21, spell22, spell23, spell24, patronus]
+more_spells.each { |e| school.add_spell(e) }
+
 # binding.pry
 
 # Assign global variables for querying from a different file
 $school = school
 $potter = potter
 $levitation = spell1
+$patronus = patronus
