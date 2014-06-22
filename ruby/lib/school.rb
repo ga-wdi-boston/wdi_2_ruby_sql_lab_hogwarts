@@ -7,4 +7,8 @@ class School
     @houses = []
     @spells = []
   end
+
+  def adjust_house_points(student, points)
+    student.house.points += points
+  end
 end
