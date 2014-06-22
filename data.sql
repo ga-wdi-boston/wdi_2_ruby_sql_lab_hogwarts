@@ -14,7 +14,8 @@ INSERT INTO students(id, name, gender, class_year, bday, admission, alumn, house
   (5, 'Bethanie', 'female', 5, '1988-07-01', '1999-09-01', '0', 1),
   (6, 'Maya', 'female', 6, '1987-02-01', '1998-09-01', '0', 2),
   (7, 'Cho', 'female', 7, '1986-10-01', '1997-09-01', '0', 3),
-  (8, 'Larry', 'male', 8, '1985-11-11', '1996-09-01', '1', 4);
+  (8, 'Larry', 'male', 8, '1985-11-11', '1996-09-01', '1', 4),
+  (9, 'Jake', 'male', 3, '1992-08-06', '2001-09-01', '0', 3);
 
 INSERT INTO spells(id, name, incantation, category, level) VALUES
   (1, 'Burger maker', 'appearus burgerus', 'food', 1),
