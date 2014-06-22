@@ -1,4 +1,5 @@
 require 'pry'
+require 'Date'
 
 require_relative '../lib/school'
 require_relative '../lib/house'
@@ -10,15 +11,15 @@ hufflepuff = House.new(name:'Hufflepuff', animal: 'Badger', points:2000)
 ravenclaw = House.new(name:'Ravenclaw', animal:'Eagle', points:1200)
 slytherin = House.new(name:'Slytherin', animal: 'Snake', points:600)
 
-harry = Student.new(name:'Harry Potter', gender:'Male', year: 7, birth_date:'1980-07-31', admission_date:'1991-09-01', alumni_status: false, house:'Gryffindor')
-ron = Student.new(name:'Ron Weasley', gender:'Male', year: 7, birth_date:'1980-03-01', admission_date:'1991-09-01', alumni_status: false, house:'Gryffindor')
-hermione = Student.new(name:'Hermione Granger', gender:'Female', year: 7, birth_date:'1979-09-19', admission_date:'1991-09-01', alumni_status: false, house:'Gryffindor')
-cedric = Student.new(name:'Cedric Diggory', gender:'Male', year: 9, birth_date:'1978-03-31', admission_date:'1989-09-01', alumni_status: true, house:'Hufflepuff')
-hannah = Student.new(name:'Hannah Abbott', gender:'Female', year: 7, birth_date:'1980-02-10', admission_date:'1991-09-01', alumni_status: false, house:'Hufflepuff')
-cho = Student.new(name:'Cho Chang', gender:'Female', year: 8, birth_date:'1979-01-21', admission_date:'1990-09-01', alumni_status: true, house:'Ravenclaw')
-padma = Student.new(name:'Padma Patil', gender:'Female', year: 7, birth_date:'1980-01-01', admission_date:'1991-09-01', alumni_status: false, house:'Ravenclaw')
-draco = Student.new(name:'Draco Malfoy', gender:'Male', year: 7, birth_date:'1980-01-22', admission_date:'1991-09-01', alumni_status: false, house:'Slytherin')
-bellatrix = Student.new(name:'Bellatrix Lestrange', gender:'Female', year: 27, birth_date:'1960-01-22', admission_date:'1971-09-01', alumni_status: true, house:'Slytherin')
+harry = Student.new(name:'Harry Potter', gender:'Male', year: 7, birth_date: Date.parse('1980-07-31'), admission_date: Date.parse('1991-09-01'), alumni_status: false, house:'Gryffindor')
+ron = Student.new(name:'Ron Weasley', gender:'Male', year: 7, birth_date: Date.parse('1980-03-01'), admission_date: Date.parse('1991-09-01'), alumni_status: false, house:'Gryffindor')
+hermione = Student.new(name:'Hermione Granger', gender:'Female', year: 7, birth_date: Date.parse('1979-09-19'), admission_date: Date.parse('1991-09-01'), alumni_status: false, house:'Gryffindor')
+cedric = Student.new(name:'Cedric Diggory', gender:'Male', year: 9, birth_date: Date.parse('1978-03-31'), admission_date: Date.parse('1989-09-01'), alumni_status: true, house:'Hufflepuff')
+hannah = Student.new(name:'Hannah Abbott', gender:'Female', year: 7, birth_date: Date.parse('1980-02-10'), admission_date: Date.parse('1991-09-01'), alumni_status: false, house:'Hufflepuff')
+cho = Student.new(name:'Cho Chang', gender:'Female', year: 8, birth_date:Date.parse('1979-01-21'), admission_date: Date.parse('1990-09-01'), alumni_status: true, house:'Ravenclaw')
+padma = Student.new(name:'Padma Patil', gender:'Female', year: 7, birth_date: Date.parse('1980-01-01'), admission_date: Date.parse('1991-09-01'), alumni_status: false, house:'Ravenclaw')
+draco = Student.new(name:'Draco Malfoy', gender:'Male', year: 7, birth_date: Date.parse('1980-01-22'), admission_date: Date.parse('1991-09-01'), alumni_status: false, house:'Slytherin')
+bellatrix = Student.new(name:'Bellatrix Lestrange', gender:'Female', year: 27, birth_date: Date.parse('1960-01-22'), admission_date: Date.parse('1971-09-01'), alumni_status: true, house:'Slytherin')
 
 summoning = Spell.new(name: 'Summoning Charm', incantation: 'Accio', category: 'charms', level:3)
 killing = Spell.new(name: 'Killing Curse', incantation: 'Avada Kedavra', category:'dark arts', level:27)
@@ -112,5 +113,9 @@ hogwarts.houses.each do |house|
 
   houses_best_spell_category[house.name] = best_spell_category[0]
 end
+
+# Test add student method
+tommy = Student.new(name:'Tommy', gender:'Male', year: 0, birth_date: Date.new(2003, 07, 31), admission_date:0, alumni_status: false, house:'Gryffindor')
+gryffindor.admit_student(tommy)
 
 binding.pry
