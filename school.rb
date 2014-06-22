@@ -1,3 +1,4 @@
+require 'date'
 class School
 
 
@@ -29,10 +30,18 @@ class School
 
   def best_spell_category(house)
     categories = @spells.map {|sp| sp.category}.uniq
-    puts categories
     ranks = {}
     categories.each {|cat| ranks[cat] = house.total_proficiency(cat)}
     ranks.key(ranks.values.max)
+  end
+
+  # Doesn't properly verify students age
+  def admit_student(student, house)
+    raise "You're too young" if false # (Date.today - student.bday.to_date).year < 10
+    student.year = 1
+    student.house = house.name
+    student.admit_date = Time.now
+    house.add_student(student)
   end
 
 end

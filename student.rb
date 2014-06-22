@@ -2,6 +2,7 @@ require_relative 'spell'
 class Student
 
   attr_reader :name, :gender, :year, :bday, :admit_date, :alum, :house, :known_spells
+  attr_writer :year, :admit_date, :house
 
   def initialize(name:, gender:, year:, bday:, admit_date:, alum: false, house:)
 

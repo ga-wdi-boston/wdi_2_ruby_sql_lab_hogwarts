@@ -125,4 +125,12 @@ hogwarts.best_spell_category(house2)
 hogwarts.best_spell_category(house3)
 hogwarts.best_spell_category(house4)
 
+
+# Behaviour
+
+# Admit a student
+student10 = Student.new(name: 'Chris', gender: 'male', year: 0, bday: '1992-08-06', admit_date: '', alum: false, house: 0)
+hogwarts.admit_student(student10, house1)
+
+
 binding.pry
