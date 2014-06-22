@@ -15,4 +15,11 @@ class Student
     @known_spells[spell] = proficiency
   end
 
+  def known_categories
+    known_spells.map {|spell, proficiency| spell.category}.uniq
+  end
+
+  def avg_proficiency
+    known_spells.map {|spell, proficiency| proficiency}.reduce(0, &:+) / known_spells.count
+  end
 end
