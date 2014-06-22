@@ -349,13 +349,10 @@ INSERT INTO school_spells(id, school_id, spell_id)
     FOR r_student IN students_csr LOOP
       FOR r_spell IN spells_csr LOOP
         BEGIN
-          -- Test if the stufent is eligible to practice the spell
-          -- IF r_spell.level <= r_student.year THEN
-            -- Practice the spell 10x
-            FOR i IN 1..10 LOOP
-              PERFORM practice_spell(r_student.id, r_spell.id);
-            END LOOP;
-          -- END IF;
+          -- Practice the spell 10x
+          FOR i IN 1..10 LOOP
+            PERFORM practice_spell(r_student.id, r_spell.id);
+          END LOOP;
         EXCEPTION WHEN OTHERS THEN
           BEGIN
             RAISE NOTICE '% (Year %) with "%" % (Level %)'
@@ -370,3 +367,22 @@ INSERT INTO school_spells(id, school_id, spell_id)
       END LOOP;
     END LOOP;
   END$$;
+
+--
+-- Step 5d: At the end of the school year, whichever house has the most points
+-- is given a prize. Write a School method that determines which house has the
+-- most points. Write a SQL statement that makes this same determination. The
+-- result should be only the name of the winning house.
+--
+DO $$
+DECLARE
+  l_name text;
+BEGIN
+  UPDATE houses SET points = points + 50 WHERE name = 'Gryffindor';
+  UPDATE houses SET points = points + 60 WHERE name = 'Slytherin';
+  UPDATE houses SET points = points + 40 WHERE name = 'Hufflepuff';
+  UPDATE houses SET points = points + 45 WHERE name = 'Ravenclaw';
+
+  SELECT name INTO l_name FROM houses ORDER BY points DESC LIMIT 1;
+  RAISE NOTICE '%', l_name;
+END $$;

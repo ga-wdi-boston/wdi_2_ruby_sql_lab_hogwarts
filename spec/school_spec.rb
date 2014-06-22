@@ -74,8 +74,30 @@ describe School do
     end
   end
 
+  describe '#winning_house' do
+    it 'returns the house with the maximum number of points' do
+      h1 = create_house(name: 'Gryffindor')
+      h2 = create_house(name: 'Slytherin')
+      h3 = create_house(name: 'Hufflepuff')
+      h4 = create_house(name: 'Ravenclaw')
+      school = create_school(houses: [h1, h2, h3, h4])
+
+      h1.change_points(50)
+      h2.change_points(60)
+      h3.change_points(40)
+      h4.change_points(45)
+
+      expect(school.winning_house).to eq h2
+      expect(school.winning_house).to_not eq h1
+    end
+  end
+
   # School factory
-  def create_school
-    School.new(name: 'Hogwarts')
+  def create_school(name: 'Hogwarts', houses: nil)
+    School.new(name: name, houses: houses)
+  end
+
+  def create_house(name: 'Gryffindor', animal: 'Gryffin', students: nil)
+    House.new(name: name, animal: animal, students: students)
   end
 end

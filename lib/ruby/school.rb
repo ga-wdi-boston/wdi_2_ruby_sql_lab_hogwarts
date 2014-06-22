@@ -97,4 +97,9 @@ class School
       end
     end
   end
+
+  # Returns the house with the winning number of points.
+  def winning_house
+    houses.max_by { |e| e.points }
+  end
 end
