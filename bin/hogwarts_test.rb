@@ -14,7 +14,7 @@ patronus = Spell.new('Patronus Charm', 'Expecto Patronum', 'Defence', 6)
 disarming = Spell.new('Disarming Charm', 'Expelliarmus', 'Defence', 5)
 killing = Spell.new('Killing Curse', 'Avada Kedavra', 'Curse', 12)
 
-spells = [summoning, gouging, severing, cruciatus, patronus, disarming, killing]
+SPELLS = [summoning, gouging, severing, cruciatus, patronus, disarming, killing]
 
 ravenclaw = House.new('Raven', 'Ravenclaw', 100)
 gryffindor = House.new('Lion', 'Gryffindor', 70)
@@ -57,7 +57,7 @@ slytherin.add_student(ginny)
 slytherin.add_student(tom)
 
 
-hogwarts = School.new(houses:[gryffindor, ravenclaw, hufflepuff, slytherin], spells: spells)
+hogwarts = School.new(houses:[gryffindor, ravenclaw, hufflepuff, slytherin], spells: SPELLS)
 # I commented out the queries so they wouldn't be annoying
 
 # Query 1
@@ -77,8 +77,32 @@ hogwarts = School.new(houses:[gryffindor, ravenclaw, hufflepuff, slytherin], spe
 # end
 # puts arr.uniq
 
-#Query 3
-puts (harry.known_spells.values.reduce(0,&:+).to_f / harry.known_spells.count)
+# Query 3
+# puts (harry.known_spells.values.reduce(0,&:+).to_f / harry.known_spells.count)
+
+# Query 4
+# arr = []
+# hogwarts.spells.each do |spell|
+#   unless harry.known_spells.include?(spell) || harry.year < spell.level
+#     arr << spell
+#   end
+# end
+
+# puts arr.map(&:name)
+
+# Query 5
+# arr = []
+# hogwarts.houses.each do |house|
+#   house.students.each do |student|
+#     arr << student unless student.known_spells.include?(patronus) || student.year < patronus.level
+#   end
+# end
+
+# puts arr.map(&:name)
+
+
+
+
 
 
 
