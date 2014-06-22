@@ -121,4 +121,9 @@ gryffindor.admit_student(tommy)
 # Test adjust_house_points method
 hogwarts.adjust_house_points(tommy, 100)
 
+# Test practice_spell method
+# tommy.practice_spell(summoning)
+harry.practice_spell(imperius)
+harry.practice_spell(confundus)
+
 binding.pry
