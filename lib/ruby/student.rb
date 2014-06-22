@@ -84,6 +84,15 @@ class Student
     house.change_points(points) if !house.nil?
   end
 
+  # Reduces the proficiency of each known spell by 10%. Known spells with a
+  # proficiency of 0 are then forgotten (deleted).
+  def summer_break
+    known_spells.each do |e|
+      e.proficiency = (e.proficiency <= 10) ? 0 : e.proficiency - 10
+    end
+    known_spells.delete_if { |e| e.proficiency == 0 }
+  end
+
   # Adds the specified collection of spells to this student. Spells in the
   # given collection that the student already knows are ignored.
   def add_initial_spells(collection)

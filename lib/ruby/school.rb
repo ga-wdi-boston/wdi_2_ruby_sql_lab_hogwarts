@@ -102,4 +102,19 @@ class School
   def winning_house
     houses.max_by { |e| e.points }
   end
+
+  # Over the summer, two things happen:
+  # All students' years are increased by 1. The exception is students who are
+  # at year 7, who instead graduate from the school. Their alumni status is
+  # updated accordingly.
+  # All students lose 10% proficiency in all of their spells. If this would
+  # take their proficiency below 0%, they will forget the spell entirely –
+  # it is removed from their "known spells".
+  def summer_break
+    current_students.each do |student|
+      student.status = true if student.year == 7
+      student.year += 1 if student.year < 7
+      student.summer_break
+    end
+  end
 end

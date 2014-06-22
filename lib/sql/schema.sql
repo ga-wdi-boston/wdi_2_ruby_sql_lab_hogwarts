@@ -386,3 +386,58 @@ BEGIN
   SELECT name INTO l_name FROM houses ORDER BY points DESC LIMIT 1;
   RAISE NOTICE '%', l_name;
 END $$;
+
+--
+-- Step 5e: Over the summer, two things happen:
+-- 1. All students' years are increased by 1. The exception is students who
+-- are at year 7, who instead graduate from the school. Their alumni status
+-- should be updated accordingly.
+-- 2. All students lose 10% proficiency in all of their spells. If this would
+-- take their proficiency below 0%, they will forget the spell entirely – it
+-- is removed from their "known spells".
+--
+-- Write a set of SQL statements that will perform the behaviors described
+-- above (wrapped in a transaction as before).
+--
+CREATE FUNCTION student_summer_break(IN p_student_id integer) RETURNS void AS $$
+DECLARE
+  l_rec            students%ROWTYPE;
+  known_spells_csr CURSOR FOR
+    SELECT * FROM known_spells WHERE student_id = p_student_id;
+BEGIN
+  SELECT * INTO l_rec FROM students WHERE id = p_student_id;
+
+  -- Update year or status
+  IF l_rec.year = 7 THEN
+    l_rec.alumni_status = true;
+  ELSE
+    l_rec.year = l_rec.year + 1;
+  END IF;
+  UPDATE students
+    SET year        = l_rec.year
+    , alumni_status = l_rec.alumni_status
+    WHERE id = l_rec.id;
+
+  -- Update known spells
+  FOR r_known_spell IN known_spells_csr LOOP
+    IF r_known_spell.proficiency <= 10 THEN
+      DELETE FROM known_spells WHERE id = r_known_spell.id;
+    ELSE
+      UPDATE known_spells
+        SET proficiency = proficiency - 10
+        WHERE id = r_known_spell.id;
+    END IF;
+  END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+--
+-- Do the code block
+--
+DO $$
+DECLARE
+  student_csr CURSOR FOR SELECT * FROM students WHERE alumni_status = false;
+BEGIN
+  FOR r_student IN student_csr LOOP
+    PERFORM student_summer_break(r_student.id);
+  END LOOP;
+END$$;
