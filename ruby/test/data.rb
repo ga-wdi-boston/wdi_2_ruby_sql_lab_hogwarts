@@ -126,4 +126,10 @@ hogwarts.adjust_house_points(tommy, 100)
 harry.practice_spell(imperius)
 harry.practice_spell(confundus)
 
+# Test spell_workshop method
+hogwarts.spell_workshop(light)
+
+# Test most_points method
+hogwarts.most_points
+
 binding.pry

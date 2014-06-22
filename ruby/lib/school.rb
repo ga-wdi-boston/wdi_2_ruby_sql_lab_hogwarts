@@ -22,4 +22,9 @@ class School
       end
     end
   end
+
+  def has_most_points
+    most_points = houses.map(&:points).max
+    houses.select { |house| house.points = most_points }
+  end
 end
