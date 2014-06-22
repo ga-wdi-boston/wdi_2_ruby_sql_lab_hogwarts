@@ -130,6 +130,6 @@ harry.practice_spell(confundus)
 hogwarts.spell_workshop(light)
 
 # Test most_points method
-hogwarts.most_points
+hogwarts.has_most_points
 
 binding.pry

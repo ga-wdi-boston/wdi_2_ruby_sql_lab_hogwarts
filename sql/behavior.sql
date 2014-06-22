@@ -29,3 +29,9 @@ UPDATE houses
 --       END IF;
 --     END IF;
 -- END;
+
+-- Winning House
+SELECT houses.name
+  FROM houses
+  WHERE houses.points = (SELECT MAX(houses.points) FROM houses);
+
