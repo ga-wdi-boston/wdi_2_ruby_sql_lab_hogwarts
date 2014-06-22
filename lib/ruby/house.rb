@@ -47,8 +47,11 @@ class House
     result.sort_by { |k, v| v }.reverse
   end
 
-  def add_points(p)
-    @points += p
+  # Awards or subtracts the given points from the house.
+  def change_points(points)
+    old_points = @points
+    raise ArgumentError if (old_points + points) < 0
+    @points += points
   end
 
   # Admits the given candidate to this house. The method sets their admission

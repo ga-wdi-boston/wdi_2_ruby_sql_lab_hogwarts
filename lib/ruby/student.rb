@@ -77,4 +77,8 @@ class Student
   def avg_proficiency
     (@known_spells.map(&:proficiency).reduce(0, &:+) / @known_spells.size).round
   end
+
+  def change_points(points)
+    house.change_points(points) if !house.nil?
+  end
 end

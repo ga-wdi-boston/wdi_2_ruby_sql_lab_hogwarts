@@ -179,7 +179,7 @@ BEGIN
 END$$;
 
 --
--- Step 5: Create a new student who is 10 years old, but does not have their
+-- Step 5a: Create a new student who is 10 years old, but does not have their
 -- year or admission date set. Then write a statement that will admit this
 -- student into a house, set their year to 1, and set their admission date
 -- to the current date.
@@ -242,3 +242,22 @@ BEGIN
   -- Admit the student to the school and house.
   PERFORM admit_student(l_seq, l_house_id, l_school_id);
 END$$;
+
+--
+-- Step 5b: Write a SQL statement that will award or subtract points from a
+-- specific student's house. Start from the student, and do not specify
+-- the house directly.
+--
+CREATE OR REPLACE FUNCTION change_points(
+    IN p_student_id INTEGER,
+    IN p_points INTEGER) RETURNS VOID
+AS $$
+BEGIN
+  UPDATE houses h
+  SET h.points = h.points + p_points
+  WHERE h.id = (
+    SELECT st.house_id
+    FROM students st
+    WHERE st.id = p_student_id);
+END;
+$$ LANGUAGE plpgsql;

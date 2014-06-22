@@ -92,6 +92,16 @@ describe Student do
     end
   end
 
+  describe '#change_points' do
+    it 'awards or subtracts points from a student\'s house' do
+      student = create_student
+      House.new(name: 'Gryffindor', animal: 'Gryffin', students: [student])
+
+      expect(student.change_points(50)).to eq 50
+      expect(student.change_points(-10)).to eq 40
+    end
+  end
+
   def create_student(name: 'Harry Potter', gender: 'M', birth_date: '1980-07-31', admission_date: '1991', year: 7)
     Student.new(name: name, gender: gender, birth_date: birth_date, admission_date: admission_date, year: year)
   end
