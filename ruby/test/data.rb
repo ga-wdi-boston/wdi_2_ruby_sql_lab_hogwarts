@@ -127,9 +127,12 @@ harry.practice_spell(imperius)
 harry.practice_spell(confundus)
 
 # Test spell_workshop method
-hogwarts.spell_workshop(light)
+hogwarts.spell_workshop('charms')
 
 # Test most_points method
 hogwarts.has_most_points
+
+# Test summer_break method
+hogwarts.summer_break
 
 binding.pry
