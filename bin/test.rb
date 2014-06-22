@@ -3,6 +3,7 @@ require_relative '../lib/houses.rb'
 require_relative '../lib/students.rb'
 require_relative '../lib/spells.rb'
 require 'pry'
+require 'date'
 
 ## Create the houses
 
@@ -11,15 +12,17 @@ hufflepuff = House.new(name: 'Hufflepuff', animal: 'Badger', points: 0)
 ravenclaw = House.new(name: 'Ravenclaw', animal: 'Eagle', points: 0)
 slytherin = House.new(name: 'Slytherin', animal: 'Snake', points: 0)
 
-spell1 = Spell.new(name: 'Houdini Spell', incantation: 'HOUDINI!', category: 'Charms', level: 'First Year')
-spell2 = Spell.new(name: 'Big Head Curse', incantation: 'Biggus Headus', category: 'Transfiguration', level: 'First Year')
-spell3 = Spell.new(name: 'Cageify Curse', incantation: 'Nicolas Cagus', category: 'Transfiguration', level: 'Fourth Year')
-spell4 = Spell.new(name: 'Calming Charm', incantation: 'Slowus Rollus', category: 'Charms', level: 'Second Year')
-spell5 = Spell.new(name: 'The Killing Curse', incantation: 'Avada Kevadra', category: 'Dark Arts', level: 'Seventh Year')
-spell6 = Spell.new(name: 'Summoning Charm', incantation: 'Accio', category: 'Charms', level: 'First Year')
-spell7 = Spell.new(name: 'Sarcastify', incantation: 'Sarco Barko', category: 'Charms', level: 'Fifth Level')
-spell8 = Spell.new(name: 'Memory Charm', incantation: 'Obliviate', category: 'Charms', level: 'Second Year')
-spell9 = Spell.new(name: 'Body-Bind Curse', incantation: 'Petrificus Totalus', category: 'Dark Arts', level: 'Sixth Year')
-spell10 = Spell.new(name: 'Slug Vomiting Charm', incantation: 'Slugus Barfus', category: 'Charms', level: 'Third Year')
+spell1 = ('Houdini ', 'HOUDINI!', 'Charms', 'First Year')
+spell2 = ('Big Head Curse', 'Biggus Headus', 'Transfiguration', 'First Year')
+spell3 = ('Cageify Curse', 'Nicolas Cagus', 'Transfiguration', 'Fourth Year')
+spell4 = ('Calming Charm', 'Slowus Rollus', 'Charms', 'Second Year')
+spell5 = ('The Killing Curse', 'Avada Kevadra', 'Dark Arts', 'Seventh Year')
+spell6 = ('Summoning Charm', 'Accio', 'Charms', 'First Year')
+spell7 = ('Sarcastify', 'Sarco Barko', 'Charms', 'Fifth Year')
+spell8 = ('Memory Charm', 'Obliviate', 'Charms', 'Second Year')
+spell9 = ('Body-Bind Curse', 'Petrificus Totalus', 'Dark Arts', 'Sixth Year')
+spell10 = ('Slug Vomiting Charm', 'Slugus Barfus', 'Charms', 'Third Year')
+
+harry = Student.new(name: 'Harry Potter', gender: 'male', year: 'First Year', birth_date: '1980-07-31', admission_date: Date., house: gryffindor)
 
 binding.pry

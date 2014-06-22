@@ -14,11 +14,13 @@ CREATE TABLE students (
   name TEXT NOT NULL,
   gender TEXT NOT NULL,
   year TEXT NOT NULL,
-  birth_date DATE NOT NULL,
-  admission_date DATE,
+  birth_date TEXT NOT NULL,
+  admission_date TIMESTAMP ,
   alumni_status BOOLEAN DEFAULT false,
   house_id INTEGER REFERENCES houses
 );
+
+CREATE INDEX on students (house_id);
 
 CREATE TABLE spells (
   id SERIAL PRIMARY KEY,

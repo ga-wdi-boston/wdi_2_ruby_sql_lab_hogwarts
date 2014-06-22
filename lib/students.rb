@@ -8,7 +8,7 @@ class Student
     @known_spells = []
   end
 
-  def learn_spell(spells)
-    @known_spells << spells
+  def learn_spell(spell)
+    @known_spells << spell
   end
 end
