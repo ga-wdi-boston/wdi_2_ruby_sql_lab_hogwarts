@@ -21,6 +21,87 @@ describe Student do
     end
   end
 
+  describe '#add_initial_spell' do
+    it 'can add a spell' do
+      student = create_student
+      expect(student.add_initial_spell(create_spell)).to eq true
+    end
+
+    it 'cannot add a duplicate spell' do
+      student = create_student
+      spell = create_spell
+      student.add_initial_spell(spell)
+
+      expect(student.add_initial_spell(spell)).to eq false
+    end
+
+    it 'cannot learn a spell if too young' do
+      student = create_student(year: 3)
+      spell = create_spell(level: 4)
+
+      expect(student.add_initial_spell(spell)).to eq false
+    end
+  end
+
+  describe '#add_initial_spells' do
+    it 'adds a collection of spells' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      spell3 = create_spell(name: 'Disarming')
+      student.add_initial_spells([spell1, spell2, spell3])
+
+      expect(student.known_spells.size).to eq 3
+    end
+  end
+
+  describe '#knows_spell?' do
+    it 'returns the spell if the given spell is known' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      student.add_initial_spell(spell1)
+
+      expect(student.knows_spell?(spell1)).not_to eq false
+      expect(student.knows_spell?(spell2)).to eq false
+    end
+  end
+
+  describe '#known_spell_categories' do
+    it 'returns a collection of known spell categories' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      spell3 = create_spell(category: 'Curse')
+      student.add_initial_spells([spell1, spell2, spell3])
+
+      expect(student.known_spell_categories.size).to eq 2
+    end
+  end
+
+  describe '#average_proficiency' do
+    it 'returns the average proficiency level across all spells they know' do
+      student = create_student
+      spell1 = create_spell
+      spell2 = create_spell(name: 'Memory')
+      spell3 = create_spell(category: 'Curse')
+      student.add_initial_spells([spell1, spell2, spell3])
+      ap = (student.known_spells.map(&:proficiency).reduce(0, &:+) / student.known_spells.size).round
+
+      expect(student.avg_proficiency).to eq ap
+    end
+  end
+
+  describe '#change_points' do
+    it 'awards or subtracts points from a student\'s house' do
+      student = create_student
+      House.new(name: 'Gryffindor', animal: 'Gryffin', students: [student])
+
+      expect(student.change_points(50)).to eq 50
+      expect(student.change_points(-10)).to eq 40
+    end
+  end
+
   describe '#learn_spell' do
     it 'can add a spell' do
       student = create_student
@@ -35,70 +116,31 @@ describe Student do
       expect(student.learn_spell(spell)).to eq false
     end
 
-    it 'cannot learn a spell if too young' do
+    it 'throws an error if the student is too young' do
       student = create_student(year: 3)
       spell = create_spell(level: 4)
 
-      expect(student.learn_spell(spell)).to eq false
+      expect{ student.learn_spell(spell) }.to raise_error Student::InvalidSpellError
     end
   end
 
-  describe '#learn_spells' do
-    it 'adds a collection of spells' do
+  describe '#practice_spell' do
+    it 'adds the spell if the student does not know it' do
       student = create_student
-      spell1 = create_spell
-      spell2 = create_spell(name: 'Memory')
-      spell3 = create_spell(name: 'Disarming')
-      student.learn_spells([spell1, spell2, spell3])
+      spell = create_spell(name: 'Spellarmius')
+      student.practice_spell(spell)
 
-      expect(student.known_spells.size).to eq 3
+      expect(student.knows_spell?(spell)).to_not eq false
     end
-  end
 
-  describe '#knows_spell?' do
-    it 'returns the spell if the given spell is known' do
+    it 'increases the proficiency by 1% unless it is already at 100%' do
       student = create_student
-      spell1 = create_spell
-      spell2 = create_spell(name: 'Memory')
-      student.learn_spell(spell1)
+      spell = create_spell(name: 'Spellarmius')
+      student.practice_spell(spell)
+      expect(student.knows_spell?(spell).proficiency).to eq 1
 
-      expect(student.knows_spell?(spell1)).not_to eq false
-      expect(student.knows_spell?(spell2)).to eq false
-    end
-  end
-
-  describe '#known_spell_categories' do
-    it 'returns a collection of known spell categories' do
-      student = create_student
-      spell1 = create_spell
-      spell2 = create_spell(name: 'Memory')
-      spell3 = create_spell(category: 'Curse')
-      student.learn_spells([spell1, spell2, spell3])
-
-      expect(student.known_spell_categories.size).to eq 2
-    end
-  end
-
-  describe '#average_proficiency' do
-    it 'returns the average proficiency level across all spells they know' do
-      student = create_student
-      spell1 = create_spell
-      spell2 = create_spell(name: 'Memory')
-      spell3 = create_spell(category: 'Curse')
-      student.learn_spells([spell1, spell2, spell3])
-      ap = (student.known_spells.map(&:proficiency).reduce(0, &:+) / student.known_spells.size).round
-
-      expect(student.avg_proficiency).to eq ap
-    end
-  end
-
-  describe '#change_points' do
-    it 'awards or subtracts points from a student\'s house' do
-      student = create_student
-      House.new(name: 'Gryffindor', animal: 'Gryffin', students: [student])
-
-      expect(student.change_points(50)).to eq 50
-      expect(student.change_points(-10)).to eq 40
+      120.times{ student.practice_spell(spell) }
+      expect(student.knows_spell?(spell).proficiency).to eq 100
     end
   end
 

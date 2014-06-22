@@ -60,7 +60,7 @@ spells = [spell1, spell2, spell3, spell4, spell5, spell6, spell7, spell8,
 school = School.new(name: 'Hogwarts', houses: houses, spells: spells)
 
 # Add spells to students
-students.each { |e| e.learn_spells(spells) }
+students.each { |e| e.add_initial_spells(spells) }
 
 # Create more spells
 spell16 = Spell.new(name: 'Unlocking', category: 'Charm', incantation: 'Alohomora', level: 1)

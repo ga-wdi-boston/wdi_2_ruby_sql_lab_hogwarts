@@ -82,4 +82,19 @@ class School
     end
     result.flatten.sort_by { |e| e.name }
   end
+
+  # Permits all current students to practice spells in the given category
+  # ten times. Spells can only be practiced if the student is eligible -
+  # in other words, the method ignores the spell if the student year is not
+  # at or above the spell level. The spell is added to the student's set
+  # of known spells if it is not aleady known and the student is eligible to
+  # learn it.
+  def hold_spell_workshop(spell_category)
+    spells = spells.select { |e| e.category == spell_category }
+    current_students.each do |student|
+      spells.each do |spell|
+        10.times { student.practice_spell(spell) } if spell.level <= student.year
+      end
+    end
+  end
 end
