@@ -11,28 +11,30 @@ spell4 = Spell.new(name: 'Rustle Jimmies', incantation: 'jimminus rustladem', ca
 spell5 = Spell.new(name: 'Attract', incantation: 'walkis this wayis', category: 'charm', level: 6)
 spell6 = Spell.new(name: 'Bother', incantation: 'annoyus alotus', category: 'pester', level: 7)
 
-student1 = Student.new(name: 'Bob', gender: 'male', year: 1, bday: '1992-10-01', admit_date: '2003-09-01', alum: false, house: 1)
-student2 = Student.new(name: 'Kevin', gender: 'male', year: 2, bday: '1991-01-01', admit_date: '2002-09-01', alum: false, house: 2)
-student3 = Student.new(name: 'Chad', gender: 'male', year: 3, bday: '1990-08-03', admit_date: '2001-09-01', alum: false, house: 3)
-student4 = Student.new(name: 'Stacey', gender: 'female', year: 4, bday: '1989-10-04', admit_date: '2000-09-01', alum: false, house: 4)
-student5 = Student.new(name: 'Bethanie', gender: 'female', year: 5, bday: '1988-07-01', admit_date: '1999-09-01', alum: false, house: 1)
-student6 = Student.new(name: 'Maya', gender: 'female', year: 6, bday: '1987-02-01', admit_date: '1998-09-01', alum: false, house: 2)
-student7 = Student.new(name: 'Cho', gender: 'female', year: 7, bday: '1986-10-01', admit_date: '1997-09-01', alum: false, house: 3)
-student8 = Student.new(name: 'Larry', gender: 'male', year: 8, bday: '1985-11-11', admit_date: '1996-09-01', alum: true, house: 4)
-student9 = Student.new(name: 'Jake', gender: 'male', year: 3, bday: '1992-08-06', admit_date: '2001-09-01', alum: false, house: 3)
-
-
 house1 =  House.new(name: 'Gryffindor', animal: 'Griffin', points: 300)
+house2 = House.new(name: 'Slytherin', animal: 'Snake', points: 100)
+house3 = House.new(name: 'Hufflepuff', animal: 'Jigglypuff', points: 200)
+house4 = House.new(name: 'Ravenclaw', animal: 'Raven', points: 250)
+
+
+student1 = Student.new(name: 'Bob', gender: 'male', year: 1, bday: '1992-10-01', admit_date: '2003-09-01', alum: false, house: house1.name)
+student2 = Student.new(name: 'Kevin', gender: 'male', year: 2, bday: '1991-01-01', admit_date: '2002-09-01', alum: false, house: house2.name)
+student3 = Student.new(name: 'Chad', gender: 'male', year: 3, bday: '1990-08-03', admit_date: '2001-09-01', alum: false, house: house3.name)
+student4 = Student.new(name: 'Stacey', gender: 'female', year: 4, bday: '1989-10-04', admit_date: '2000-09-01', alum: false, house: house4.name)
+student5 = Student.new(name: 'Bethanie', gender: 'female', year: 5, bday: '1988-07-01', admit_date: '1999-09-01', alum: false, house: house1.name)
+student6 = Student.new(name: 'Maya', gender: 'female', year: 6, bday: '1987-02-01', admit_date: '1998-09-01', alum: false, house: house2.name)
+student7 = Student.new(name: 'Cho', gender: 'female', year: 7, bday: '1986-10-01', admit_date: '1997-09-01', alum: false, house: house3.name)
+student8 = Student.new(name: 'Larry', gender: 'male', year: 8, bday: '1985-11-11', admit_date: '1996-09-01', alum: true, house: house4.name)
+student9 = Student.new(name: 'Jake', gender: 'male', year: 3, bday: '1992-08-06', admit_date: '2001-09-01', alum: false, house: house3.name)
+
+
 house1.add_student(student1)
 house1.add_student(student5)
-house2 = House.new(name: 'Slytherin', animal: 'Snake', points: 100)
 house2.add_student(student2)
 house2.add_student(student6)
-house3 = House.new(name: 'Hufflepuff', animal: 'Jigglypuff', points: 200)
 house3.add_student(student3)
 house3.add_student(student7)
 house3.add_student(student9)
-house4 = House.new(name: 'Ravenclaw', animal: 'Raven', points: 250)
 house4.add_student(student4)
 house4.add_student(student8)
 
@@ -129,8 +131,10 @@ hogwarts.best_spell_category(house4)
 # Behaviour
 
 # Admit a student
-student10 = Student.new(name: 'Chris', gender: 'male', year: 0, bday: '1992-08-06', admit_date: '', alum: false, house: 0)
+student10 = Student.new(name: 'Chris', gender: 'male', year: 0, bday: '1992-08-06', admit_date: 'none', alum: false, house: 'none')
 hogwarts.admit_student(student10, house1)
 
+# award points to a student/house
+hogwarts.award_points(student10, 200)
 
 binding.pry

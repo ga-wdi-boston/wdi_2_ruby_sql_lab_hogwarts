@@ -37,11 +37,15 @@ class School
 
   # Doesn't properly verify students age
   def admit_student(student, house)
-    raise "You're too young" if false # (Date.today - student.bday.to_date).year < 10
+    raise "You're too young" if false #(Date.today - Date.new(*student.bday.split('-').map{|e| e.to_i})).year < 10
     student.year = 1
     student.house = house.name
     student.admit_date = Time.now
     house.add_student(student)
+  end
+
+  def award_points(student, points)
+    @houses.each { |house| house.add_points(points) if house.name == student.house}
   end
 
 end

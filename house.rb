@@ -28,4 +28,9 @@ class House
     students.each {|s| s.known_spells.each {|sp, prof| total += prof if sp.category == spell_category }}
     total
   end
+
+  def add_points(points)
+    @points += points
+  end
+
 end
