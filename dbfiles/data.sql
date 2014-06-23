@@ -6,14 +6,22 @@ INSERT INTO houses (animal, name, points) VALUES
   ('Badger', 'Hufflepuff', 30),
   ('Serpent', 'Slytherin', 120);
 
-INSERT INTO students (name, gender, year, birth_date, admission_date, alumni_status) VALUES
-  ('Harry', 'm', 4, '1994-04-12', '2004-05-31', 'f'),
-  ('Hermione', 'f', 4, '1993-09-12', '2004-05-31', 'f'),
-  ('Ron', 'm', 5, '1993-06-11', '2003-05-28', 'f'),
-  ('Fred', 'm', 9, '1988-08-01', '1999-05-29', 't'),
-  ('Dumbledore', 'm', 60, '1942-04-19', '1952-05-30', 't'),
-  ('Ginny', 'f', 1, '1997-08-12', '2006-05-28', 'f'),
-  ('Tom', 'm', 40, '1962-07-06', '1969-05-04', 't');
+WITH temp (name, gender, year, birth_date, admission_date, alumni_status, house) AS
+  (VALUES
+    ('Harry', 'm', 4, to_date('1994-04-12','YYYY-MM-DD'), to_date('2004-05-31','YYYY-MM-DD'), 'f', 'Gryffindor'),
+    ('Hermione', 'f', 4, to_date('1993-09-12','YYYY-MM-DD'), to_date('2004-05-31','YYYY-MM-DD'), 'f', 'Ravenclaw'),
+    ('Ron', 'm', 5, to_date('1993-06-11','YYYY-MM-DD'), to_date('2003-05-28','YYYY-MM-DD'), 'f', 'Hufflepuff'),
+    ('Fred', 'm', 9, to_date('1988-08-01','YYYY-MM-DD'), to_date('1999-05-29','YYYY-MM-DD'), 't', 'Gryffindor'),
+    ('Dumbledore', 'm', 60, to_date('1942-04-19','YYYY-MM-DD'), to_date('1952-05-30','YYYY-MM-DD'), 't', 'Gryffindor'),
+    ('Ginny', 'f', 1, to_date('1997-08-12','YYYY-MM-DD'), to_date('2006-05-28','YYYY-MM-DD'), 'f', 'Slytherin'),
+    ('Tom', 'm', 40, to_date('1962-07-06','YYYY-MM-DD'), to_date('1969-05-04','YYYY-MM-DD'), 't', 'Slytherin')
+  )
+  INSERT INTO students
+    (name, gender, year, birth_date, admission_date, alumni_status, house_id)
+  SELECT
+   temp.name, temp.gender, temp.year, temp.birth_date, temp.admission_date, temp.alumni_status, houses.id
+    FROM houses JOIN temp
+      ON houses.name = temp.house;
 
 INSERT INTO spells (name, incantation, category, level) VALUES
   ('Summoning Charm', 'Accio', 'Charm', 2),

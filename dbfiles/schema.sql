@@ -17,7 +17,8 @@ CREATE TABLE students (
   year INTEGER,
   birth_date DATE,
   admission_date DATE,
-  alumni_status TEXT
+  alumni_status TEXT,
+  house_id INTEGER REFERENCES houses
 );
 
 CREATE TABLE spells (

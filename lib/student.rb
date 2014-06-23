@@ -1,5 +1,6 @@
 class Student
-  attr_reader :name, :gender, :year, :birth_date, :admission_date, :alumni_status, :house, :known_spells
+  attr_reader :name, :gender, :birth_date, :alumni_status, :house, :known_spells
+  attr_accessor :admission_date, :year
 
   def initialize(
     name,
@@ -18,6 +19,10 @@ class Student
 
   def add_spell(spell, proficiency)
     @known_spells[spell] = proficiency
+  end
+
+  def award_points_to(num)
+    house.add_points(num)
   end
 
 end

@@ -100,7 +100,7 @@ hogwarts = School.new(houses:[gryffindor, ravenclaw, hufflepuff, slytherin], spe
 
 # puts arr.map(&:name)
 
-
+binding.pry
 
 
 
