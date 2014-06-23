@@ -19,4 +19,12 @@ class School
     @houses[@houses.map(&:points).index(@houses.map(&:points).max)]
   end
 
+  def summer
+    houses.each do |house|
+      house.students.each do |student|
+        student.summer
+      end
+    end
+  end
+
 end
