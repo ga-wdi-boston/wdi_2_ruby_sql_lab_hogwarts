@@ -6,6 +6,7 @@ INSERT INTO houses (name, animal, points) VALUES
   ('Ravenclaw', 'Eagle', 0),
   ('Slytherin', 'Snake', 0);
 
+
 INSERT INTO spells (name, incantation, category, level) VALUES
   ('Houdini ', 'HOUDINI!', 'Charms', 'First Year'),
   ('Big Head Curse', 'Biggus Headus', 'Transfiguration', 'First Year'),
@@ -36,8 +37,37 @@ INSERT INTO students
 SELECT
   temp.name, temp.gender, temp.year, temp.birth_date, temp.admission_date, temp.alumni_status, houses.id
 FROM
-  houses JOIN temp
+  houses INNER JOIN temp
     ON temp.house = houses.name;
+
+-- UPDATE houses
+--   SET student_list = ARRAY[student_list ]
+--   FROM
+--     students
+--   WHERE
+    -- students.house_id = houses.id;
+
+
+WITH temp_2 (proficiency, level, spell, student) AS
+  (VALUES
+    (0, 3, 'Summoning Charm', 'Harry Potter')
+)
+INSERT INTO known_spells
+  (proficiency, level, spell_id, student_id)
+SELECT
+  temp_2.proficiency, temp_2.level, spells.id, students.id
+FROM
+  spells INNER JOIN temp_2
+    ON spells.name = temp_2.spell
+  INNER JOIN students
+    ON temp_2.student = students.name;
+
+
+
+
+
+
+
 
 
 

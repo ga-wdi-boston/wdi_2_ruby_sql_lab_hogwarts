@@ -6,8 +6,11 @@ CREATE TABLE houses (
   id SERIAL PRIMARY KEY,
   name TEXT UNIQUE NOT NULL,
   animal TEXT NOT NULL,
-  points INTEGER
+  points INTEGER,
+  student_list INTEGER[]
 );
+
+CREATE INDEX on houses (name);
 
 CREATE TABLE students (
   id SERIAL PRIMARY KEY,
@@ -37,3 +40,6 @@ CREATE TABLE known_spells (
   spell_id INTEGER REFERENCES spells,
   student_id INTEGER REFERENCES students
 );
+
+CREATE INDEX on known_spells (spell_id);
+CREATE INDEX on known_spells (student_id);
