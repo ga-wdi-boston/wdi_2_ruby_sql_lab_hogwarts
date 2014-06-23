@@ -8,7 +8,17 @@ class House
     @students = []
   end
 
+  def bulk_add_students(students)
+    students.each do |student|
+      @students << student
+    end
+  end
+
   def add_student(student)
     @students << student
   end
+
+  # def update_student_list
+  #   Student.where
+  # end
 end

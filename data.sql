@@ -49,8 +49,12 @@ FROM
 
 
 WITH temp_2 (proficiency, level, spell, student) AS
-  (VALUES
-    (0, 3, 'Summoning Charm', 'Harry Potter')
+(VALUES
+  (78, 1, 'Summoning Charm', 'Harry Potter'),
+  (56, 2, 'Memory Charm', 'Harry Potter'),
+  (33, 3, 'Slug Vomiting Charm', 'Cedric Diggory'),
+  (97, 2, 'Slowus Rollus', 'Hermione Granger'),
+  (61, 1, 'Biggus Headus', 'Ron Weasley')
 )
 INSERT INTO known_spells
   (proficiency, level, spell_id, student_id)

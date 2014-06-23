@@ -24,6 +24,7 @@ CREATE TABLE students (
 );
 
 CREATE INDEX on students (house_id);
+CREATE INDEX on students (name);
 
 CREATE TABLE spells (
   id SERIAL PRIMARY KEY,
