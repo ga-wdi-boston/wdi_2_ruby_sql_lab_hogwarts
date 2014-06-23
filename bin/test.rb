@@ -47,5 +47,8 @@ ravenclaw.add_student(student8)
 hufflepuff.add_student(student9)
 
 KnownSpell.new(proficiency: 78, level: 1, spell: spell6, student: student1)
+KnownSpell.new(proficiency: 73, level: 1, spell: spell6, student: student7)
+KnownSpell.new(proficiency: 56, level: 5, spell: spell3, student: student9)
+KnownSpell.new(proficiency: 67, level: 2, spell: spell8, student: student2)
 
 binding.pry
