@@ -19,7 +19,7 @@ UPDATE houses SET
     WHERE students.name = 'Harry');
 
 BEGIN;
-
+  --I dont know how to add a new known spell if it does not already exist.
   UPDATE known_spells SET
     proficiency = LEAST(proficiency + 10, 100)
     WHERE id IN (
@@ -32,3 +32,11 @@ BEGIN;
       WHERE spells.name = 'Gouging Spell' AND spells.level <= students.year);
 
 COMMIT;
+
+SELECT temp.name FROM
+ (SELECT houses.name, MAX(houses.points) AS max_points
+  FROM houses
+  GROUP BY houses.name
+  ORDER BY max_points DESC
+  LIMIT 1
+  ) AS temp;
