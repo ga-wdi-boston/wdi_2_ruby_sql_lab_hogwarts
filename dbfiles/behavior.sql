@@ -8,3 +8,12 @@ UPDATE students SET
   year = 1,
   house_id = 1
   WHERE name = 'Neville';
+
+UPDATE houses SET
+  points = points + 20
+  WHERE id IN (
+    SELECT houses.id
+    FROM houses
+    INNER JOIN students
+    ON students.house_id = houses.id
+    WHERE students.name = 'Harry');
